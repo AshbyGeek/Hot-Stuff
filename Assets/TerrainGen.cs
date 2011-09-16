@@ -13,23 +13,45 @@ public class TerrainGen : MonoBehaviour {
 	
 	public MeshFilter terrainObjMeshFilter;
 	public float terrHeight = 5.0f;
-//	
-//	public Object water_tile;
-//	public Object tree_tile;
-//	public Object plains_tile;
-//	public Object mountain_tile;
-//	public Object brush_tile;
+	
+	public Object water_obj;
+	public Object tree_obj;
+	public Object plains_obj;
+	public Object mountain_obj;
+	public Object brush_obj;
 	public int size = 40;
 	
 	public int Tree_Spawns = 5;
 	public int Water_Spawns = 5;
 	public int Mtn_Spawns = 5;
 	
+	
+	private int cols;
+    private int rows;
+
+    private const int mtn_thresh = 80;
+    private const int plain_thresh = 20;
+    private const int brush_thresh = 40;
+    private const int tree_thresh = 60;
+
+    private const int mtn_chain = 0;
+    private const int water_chain = 2;
+
+    private float[] array;
+    private bool[,] locked;
+	
 	// Use this for initialization
 	void Start () {
 		this.init(size,size);
-		//this.lockElev(0,1, 0);
-		//this.lockElev(19,1, 0);
+		this.lockElev(1,1, 90);
+		this.lockElev(1,2, 90);
+		this.lockElev(2,2, 90);
+		this.lockElev(2,1, 90);
+		
+		this.lockElev(21,21, 0);
+		this.lockElev(21,22, 0);
+		this.lockElev(22,22, 0);
+		this.lockElev(22,21, 0);
 
 
 		this.randomize(Mtn_Spawns,Water_Spawns,Tree_Spawns);
@@ -59,33 +81,43 @@ public class TerrainGen : MonoBehaviour {
 		
 		for (int i = 0; i < size; i++){
 			for (int j = 0; j < size; j++){
-//				Object tmpObj;
-//				
-//				switch(type(i,j))
-//				{
-//				case tileType.mountain:
-//					tmpObj = mountain_tile;
-//					break;
-//				case tileType.tree:
-//					tmpObj = tree_tile;
-//					break;
-//				case tileType.brush:
-//					tmpObj = brush_tile;
-//					break;
-//				case tileType.plains:
-//					tmpObj = plains_tile;
-//					break;
-//				default:
-//					tmpObj = water_tile;
-//					break;
-//				}
+				Object tmpObj;
+				
+				switch(type(i,j))
+				{
+				case tileType.mountain:
+					tmpObj = mountain_obj;
+					break;
+				case tileType.tree:
+					tmpObj = tree_obj;
+					
+					break;
+				case tileType.brush:
+					tmpObj = brush_obj;
+					break;
+				case tileType.plains:
+					tmpObj = plains_obj;
+					break;
+				default:
+					tmpObj = water_obj;
+					break;
+				}
 				
 				newVertices[i*this.cols + j] = new Vector3(i - (this.rows - 1)/2,
 				                                           this.array[i*this.cols+j]/terrHeight,
 				                                           j - (this.cols - 1)/2);
 				newUV[i*this.cols + j] = new Vector2(i - (this.rows - 1)/2,
 				                                     j - (this.cols - 1)/2);
-				//Instantiate(tmpObj,newVertices[i*this.cols + j], Quaternion.identity);
+				
+				if (tmpObj != null)
+				{
+					Object newInst = Instantiate(tmpObj,
+				            new Vector3(i - (this.rows - 1)/2,
+                                        this.array[i*this.cols+j]/terrHeight,
+                                        j - (this.cols - 1)/2),
+				            Quaternion.identity);
+				}
+				
 			}
 		}
 		
@@ -100,20 +132,6 @@ public class TerrainGen : MonoBehaviour {
 		terrainObjMeshFilter.mesh = tmp;
 		
 	}
-	
-	int cols;
-    int rows;
-
-    const int mtn_thresh = 58;
-    const int plain_thresh = 43;
-    const int brush_thresh = 47;
-    const int tree_thresh = 47;
-
-    const int mtn_chain = 0;
-    const int water_chain = 2;
-
-    float[] array;
-    bool[,] locked;
 
     public void init(int cols, int rows)
     {
@@ -136,8 +154,8 @@ public class TerrainGen : MonoBehaviour {
     {
         for (int y = 0; y < num_mtn; y++)
         {
-            int randrow = Random.Range(0, this.rows - 1);
-            int randcol = Random.Range(0, this.cols - 1);
+            int randrow = Random.Range(1, this.rows - 2);
+            int randcol = Random.Range(1, this.cols - 2);
             //this.lockElev(randrow,randcol,Random.Range(TerrainGen.mtn_thresh,100);
             this.lockElev(randrow, randcol, 100);
 
@@ -145,11 +163,14 @@ public class TerrainGen : MonoBehaviour {
             {
                 randrow += Random.Range(-2, 5);
                 randcol += Random.Range(-2, 5);
-                randrow = System.Math.Max(0, randrow);
-                randrow = System.Math.Min(this.rows - 1, randrow);
-                randcol = System.Math.Max(0, randcol);
-                randcol = System.Math.Min(this.cols - 1, randcol);
+                randrow = System.Math.Max(1, randrow);
+                randrow = System.Math.Min(this.rows - 2, randrow);
+                randcol = System.Math.Max(1, randcol);
+                randcol = System.Math.Min(this.cols - 2, randcol);
                 this.lockElev(randrow, randcol, 100);
+                this.lockElev(randrow, randcol+1, 100);
+                this.lockElev(randrow+1, randcol, 100);
+                this.lockElev(randrow+1, randcol+1, 100);
             }
         }
 
