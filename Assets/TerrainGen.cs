@@ -11,11 +11,14 @@ public class TerrainGen : MonoBehaviour {
 		water
 	}
 	
-	public Object water_tile;
-	public Object tree_tile;
-	public Object plains_tile;
-	public Object mountain_tile;
-	public Object brush_tile;
+	public MeshFilter terrainObjMeshFilter;
+	public float terrHeight = 5.0f;
+//	
+//	public Object water_tile;
+//	public Object tree_tile;
+//	public Object plains_tile;
+//	public Object mountain_tile;
+//	public Object brush_tile;
 	public int size = 40;
 	
 	public int Tree_Spawns = 5;
@@ -29,42 +32,74 @@ public class TerrainGen : MonoBehaviour {
 		//this.lockElev(19,1, 0);
 
 
-		this.randomize(8,8,8);
-		this.smooth(.00001, 2000,0.9);
+		this.randomize(Mtn_Spawns,Water_Spawns,Tree_Spawns);
+		this.smooth(.00000001, 3000,0.9);
+		
+		Vector3[] newVertices = new Vector3[this.rows * this.cols];
+		Vector2[] newUV = new Vector2[newVertices.Length];
+		
+		int rects = (this.rows - 1) * (this.cols - 1);
+		int[] newTriangles = new int[rects*2*3];
+		
+		int curTri = 0;
+		for (int i = 0; i < this.rows - 1; i++){
+			for (int j = 0; j < this.cols - 1; j++){
+				newTriangles[curTri] 		= (i)	*this.cols + (j+1);
+				newTriangles[curTri + 1] 	= (i+1)	*this.cols +  j;
+				newTriangles[curTri + 2]	=  i	*this.cols +  j;
+				
+				newTriangles[curTri + 3] 	= (i)	*this.cols + (j+1);
+				newTriangles[curTri + 4] 	= (i+1)	*this.cols + (j+1);
+				newTriangles[curTri + 5] 	= (i+1)	*this.cols +  j;
+				
+				curTri += 6;
+			}
+		}
 		
 		
 		for (int i = 0; i < size; i++){
 			for (int j = 0; j < size; j++){
-				Object tmpObj;
+//				Object tmpObj;
+//				
+//				switch(type(i,j))
+//				{
+//				case tileType.mountain:
+//					tmpObj = mountain_tile;
+//					break;
+//				case tileType.tree:
+//					tmpObj = tree_tile;
+//					break;
+//				case tileType.brush:
+//					tmpObj = brush_tile;
+//					break;
+//				case tileType.plains:
+//					tmpObj = plains_tile;
+//					break;
+//				default:
+//					tmpObj = water_tile;
+//					break;
+//				}
 				
-				switch(type(i,j))
-				{
-				case tileType.mountain:
-					tmpObj = mountain_tile;
-					break;
-				case tileType.tree:
-					tmpObj = tree_tile;
-					break;
-				case tileType.brush:
-					tmpObj = brush_tile;
-					break;
-				case tileType.plains:
-					tmpObj = plains_tile;
-					break;
-				default:
-					tmpObj = water_tile;
-					break;
-				}
-				
-				Instantiate(tmpObj, new Vector3(i,0,j), Quaternion.identity);
+				newVertices[i*this.cols + j] = new Vector3(i - (this.rows - 1)/2,
+				                                           this.array[i*this.cols+j]/terrHeight,
+				                                           j - (this.cols - 1)/2);
+				newUV[i*this.cols + j] = new Vector2(i - (this.rows - 1)/2,
+				                                     j - (this.cols - 1)/2);
+				//Instantiate(tmpObj,newVertices[i*this.cols + j], Quaternion.identity);
 			}
 		}
+		
+		
+		Mesh tmp = new Mesh();
+		tmp.vertices = newVertices;
+		tmp.triangles = newTriangles;
+		tmp.uv = newUV;
+		tmp.RecalculateNormals();
+		tmp.RecalculateBounds();
+		//tmp.Optimize(); //Higher load time, faster draw speed
+		terrainObjMeshFilter.mesh = tmp;
+		
 	}
-
-	// Update is called once per frame
-	//void Update () {
-
-	//}
 	
 	int cols;
     int rows;
@@ -77,14 +112,14 @@ public class TerrainGen : MonoBehaviour {
     const int mtn_chain = 0;
     const int water_chain = 2;
 
-    int[] array;
+    float[] array;
     bool[,] locked;
 
     public void init(int cols, int rows)
     {
         this.cols = cols;
         this.rows = rows;
-        this.array = new int[cols * rows];
+        this.array = new float[cols * rows];
         this.locked = new bool[rows, cols];
 
         for (int i = 0; i < cols; i++)
@@ -157,7 +192,7 @@ public class TerrainGen : MonoBehaviour {
 
     public TerrainGen.tileType type(int row, int col)
     {
-        int curVal = this.value(row, col);
+        float curVal = this.value(row, col);
 
         if (curVal > TerrainGen.mtn_thresh)
             return TerrainGen.tileType.mountain;
@@ -171,7 +206,7 @@ public class TerrainGen : MonoBehaviour {
         return TerrainGen.tileType.water;
     }
 
-    public int value(int row, int col)
+    public float value(int row, int col)
     {
         return this.array[row * this.cols + col];
     }
