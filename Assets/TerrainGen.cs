@@ -168,9 +168,6 @@ public class TerrainGen : MonoBehaviour {
                 randcol = System.Math.Max(1, randcol);
                 randcol = System.Math.Min(this.cols - 2, randcol);
                 this.lockElev(randrow, randcol, 100);
-                this.lockElev(randrow, randcol+1, 100);
-                this.lockElev(randrow+1, randcol, 100);
-                this.lockElev(randrow+1, randcol+1, 100);
             }
         }
 
@@ -206,9 +203,28 @@ public class TerrainGen : MonoBehaviour {
 
     public void lockElev(int row, int col, int value)
     {
-        int index = row * this.cols + col;
-        this.array[index] = value;
+        int index = row*this.cols + col;
+        this.array[row*this.cols + col] = value;
         this.locked[row, col] = true;
+		
+		if (row+1 < this.rows){
+			this.locked[row + 1, col] = true;
+        	this.array[(row+1)*this.cols + col] = value;
+		}
+		if (row-1 > 0){
+			this.locked[row-1, col] = true;
+        	this.array[(row-1)*this.cols + col] = value;
+		}
+		
+		if (col+1 < this.cols){
+			this.locked[row,     col + 1]	= true;
+        	this.array[row*this.cols + col + 1] = value;
+		}
+		if (col-1 > 0){
+			this.locked[row, col-1]	= true;
+        	this.array[row*this.cols + col - 1] = value;
+		}
+		
     }
 
     public TerrainGen.tileType type(int row, int col)
