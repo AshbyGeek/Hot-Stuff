@@ -27,15 +27,16 @@ function LateUpdate () {
     if (target) {
         x += Input.GetAxis("Mouse X") * xSpeed * 0.02;
         y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02;
-        distance -= Input.GetAxis("Mouse ScrollWheel") * zSpeed * 0.2;
  		
  		y = ClampAngle(y, yMinLimit, yMaxLimit);
- 		       
+ 		  
         var rotation = Quaternion.Euler(y, x, 0);
-        var position = rotation * Vector3(0.0, 0.0, -distance) + target.position;
+        var position = rotation * Vector3(Input.GetAxis("Horizontal"),
+        								  Input.GetAxis("Mouse ScrollWheel") * zSpeed,        								  
+        								  Input.GetAxis("Vertical"));
         
         transform.rotation = rotation;
-        transform.position = position;
+        transform.position = transform.position + position;
     }
 }
 
