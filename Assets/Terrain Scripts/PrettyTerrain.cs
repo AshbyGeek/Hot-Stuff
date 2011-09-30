@@ -3,15 +3,15 @@ using System.Collections;
 
 public class PrettyTerrain : MonoBehaviour {
 	public TerrainGen terrain;
-	private const float terrHeight = 100.0f;
 	
 	//
+	public GameObject boundsObj;
 	public GameObject water_obj;
 	public GameObject tree_obj;
 	public GameObject plains_obj;
 	public GameObject mountain_obj;
 	public GameObject brush_obj;
-	
+		
 	public Vector3 size = new Vector3(80,40,80);
 	
 	void generateMesh(){
@@ -93,11 +93,12 @@ public class PrettyTerrain : MonoBehaviour {
 		mesh.RecalculateNormals();
 		mesh.Optimize(); //Higher load time, faster draw speed
 		//terrainObjMeshFilter.mesh = tmp;
-		mesh.bounds = new Bounds(new Vector3(-halfX*sizeScale.x,0,-halfZ*sizeScale.z),
-		                         new Vector3(halfX*sizeScale.x,sizeScale.y,halfZ*sizeScale.z));
+		//mesh.bounds = new Bounds(Vector3.zero,
+		//                         new Vector3(halfX*sizeScale.x,sizeScale.y,halfZ*sizeScale.z));
 		
 		this.GetComponent<MeshFilter>().mesh = mesh;
 		this.GetComponent<MeshCollider>().sharedMesh = mesh;
+		mesh.RecalculateBounds();
 	}
 	
 	void Start () {
@@ -109,10 +110,5 @@ public class PrettyTerrain : MonoBehaviour {
 		
 		terrain.startFinished = true;
 		this.generateMesh();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
