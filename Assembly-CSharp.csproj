@@ -44,7 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\TerrainGen.cs" />
+     <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
+     <Compile Include="Assets\Terrain Scripts\TerrainGen.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\BrushTile.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\MtnTile.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\PlainTile.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\TerrainTile.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\TreeTile.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tiles\WaterTile.cs" />
      <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
   </ItemGroup>
   <ItemGroup>

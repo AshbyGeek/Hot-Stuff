@@ -27,7 +27,7 @@ function LateUpdate () {
     if (target) {
         x += Input.GetAxis("Mouse X") * xSpeed * 0.02;
         y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02;
-        distance -= Input.GetAxis("Mouse ScrollWheel") * zSpeed * 0.02;
+        distance -= Input.GetAxis("Mouse ScrollWheel") * zSpeed * 0.2;
  		
  		y = ClampAngle(y, yMinLimit, yMaxLimit);
  		       

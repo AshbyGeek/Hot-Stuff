@@ -1,8 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TerrainGen.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Terrain Scripts\PrettyTerrain.cs">
     <Files>
-      <File FileName="Assets\TerrainGen.cs" Line="118" Column="38" />
+      <File FileName="Assets\Terrain Scripts\TerrainGen.cs" Line="139" Column="30" />
+      <File FileName="Assets\Terrain Scripts\PrettyTerrain.cs" Line="4" Column="45" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TerrainTile.cs" Line="4" Column="44" />
+      <File FileName="Assets\Terrain Scripts\Tiles\MtnTile.cs" Line="4" Column="37" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TreeTile.cs" Line="5" Column="37" />
+      <File FileName="Assets\Terrain Scripts\Tiles\BrushTile.cs" Line="5" Column="37" />
+      <File FileName="Assets\Terrain Scripts\Tiles\PlainTile.cs" Line="5" Column="37" />
+      <File FileName="Assets\Terrain Scripts\Tiles\WaterTile.cs" Line="5" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
