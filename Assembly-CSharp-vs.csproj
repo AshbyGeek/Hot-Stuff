@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Loader\GUI_Testing.cs" />
      <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
      <Compile Include="Assets\Terrain Scripts\TerrainGen.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\BrushTile.cs" />
