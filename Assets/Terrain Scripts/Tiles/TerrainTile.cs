@@ -13,12 +13,28 @@ public class TerrainTile : ScriptableObject{
 	}
 	
 	public float height;
-	public int heatIndex;
+	public float heatIndex;
 	public TileType type;
+	
+	private float newheat=0;
 	
 	public void init(float height){
 		this.height = height;
 		this.heatIndex = 0;
 		this.type = TerrainTile.TileType.none;
 	}
+	
+	
+	public void accumulateHeat(float more)
+	{
+		newheat += more;
+	}
+	
+	public void updateHeat()
+	{
+		heatIndex += newheat;
+		newheat=0;		
+	}
+	
+	
 }
