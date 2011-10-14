@@ -3,9 +3,8 @@ using System.Collections;
 
 public class PrettyTerrain : MonoBehaviour {
 	public TerrainGen terrain;
+	private GameObject[,] tiles;
 	
-	//
-	public GameObject boundsObj;
 	public GameObject water_obj;
 	public GameObject tree_obj;
 	public GameObject plains_obj;
@@ -15,6 +14,10 @@ public class PrettyTerrain : MonoBehaviour {
 	public Vector3 size = new Vector3(80,40,80);
 	
 	void generateMesh(){
+		int tmpX = terrain.tiles.GetLength(0);
+		int tmpY = terrain.tiles.GetLength(1);
+		tiles = new GameObject[tmpX,tmpY];
+		
 		float halfX = (terrain.rows - 1)/2.0f;
 		float halfZ = (terrain.cols - 1)/2.0f;
 				
@@ -76,12 +79,13 @@ public class PrettyTerrain : MonoBehaviour {
 					tmpObj = null;
 					break;
 				}
-				if (tmpObj != null)
-				{
-					Vector3 newLoc = Vector3.Scale(new Vector3(x,y,z),this.transform.localScale);
-					GameObject tmp = (GameObject) Instantiate(tmpObj, newLoc,Quaternion.identity);
-					tmp.transform.localScale = Vector3.Scale(new Vector3(.5f,.5f,.5f),tmp.transform.localScale);
-				}
+				
+				if (tmpObj == null)
+					tmpObj = new GameObject();
+				
+				Vector3 newLoc = Vector3.Scale(new Vector3(x,y,z),this.transform.localScale);
+				GameObject tmp = (GameObject) Instantiate(tmpObj, newLoc,Quaternion.identity);
+				tmp.transform.localScale = Vector3.Scale(new Vector3(.5f,.5f,.5f),tmp.transform.localScale);
 			}
 		}
 		
@@ -92,9 +96,6 @@ public class PrettyTerrain : MonoBehaviour {
 		mesh.uv = newUV;
 		mesh.RecalculateNormals();
 		mesh.Optimize(); //Higher load time, faster draw speed
-		//terrainObjMeshFilter.mesh = tmp;
-		//mesh.bounds = new Bounds(Vector3.zero,
-		//                         new Vector3(halfX*sizeScale.x,sizeScale.y,halfZ*sizeScale.z));
 		
 		this.GetComponent<MeshFilter>().mesh = mesh;
 		this.GetComponent<MeshCollider>().sharedMesh = mesh;
@@ -107,8 +108,8 @@ public class PrettyTerrain : MonoBehaviour {
 		terrain.randomize(terrain.Mtn_Spawns,terrain.Water_Spawns,terrain.Tree_Spawns);
 		terrain.smooth(.00000001, 3000, 0.9);
 		terrain.toTerrainTiles();
-		
 		terrain.startFinished = true;
+		
 		this.generateMesh();
 	}
 }
