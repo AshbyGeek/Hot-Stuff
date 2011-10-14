@@ -3,11 +3,11 @@ using System.Collections;
 
 public class TerrainGen : MonoBehaviour {
 	
-    public const int mtn_thresh = 80;
-    public const int plain_thresh = 20;
-    public const int brush_thresh = 40;
-    public const int tree_thresh = 60;
-    public const int mtn_chain = 0;
+    public const int mtn_thresh = 86;
+    public const int plain_thresh = 8;
+    public const int brush_thresh = 15;
+    public const int tree_thresh = 30;
+    public const int mtn_chain = 4;
     public const int water_chain = 2;
 	
 
