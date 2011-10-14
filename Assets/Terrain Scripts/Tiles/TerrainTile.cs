@@ -15,6 +15,7 @@ public class TerrainTile : ScriptableObject{
 	public float height;
 	public float heatIndex;
 	public TileType type;
+	public GameObject tileObj;
 	
 	private float newheat=0;
 	

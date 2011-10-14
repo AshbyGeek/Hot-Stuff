@@ -76,11 +76,15 @@ public class PrettyTerrain : MonoBehaviour {
 					tmpObj = null;
 					break;
 				}
+	
+				
 				if (tmpObj != null)
 				{
 					Vector3 newLoc = Vector3.Scale(new Vector3(x,y,z),this.transform.localScale);
 					GameObject tmp = (GameObject) Instantiate(tmpObj, newLoc,Quaternion.identity);
 					tmp.transform.localScale = Vector3.Scale(new Vector3(.5f,.5f,.5f),tmp.transform.localScale);
+	
+					terrain.tiles[i,j].tileObj = tmp;
 				}
 			}
 		}
