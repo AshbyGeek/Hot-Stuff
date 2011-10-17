@@ -3,18 +3,21 @@ using System.Collections;
 
 public class PrettyTerrain : MonoBehaviour {
 	public TerrainGen terrain;
+	private GameObject[,] tiles;
 	
-	//
-	public GameObject boundsObj;
 	public GameObject water_obj;
 	public GameObject tree_obj;
 	public GameObject plains_obj;
 	public GameObject mountain_obj;
 	public GameObject brush_obj;
-		
-	public Vector3 size = new Vector3(80,40,80);
+	
+	public GameObject FireObj;
 	
 	void generateMesh(){
+		int tmpX = terrain.tiles.GetLength(0);
+		int tmpY = terrain.tiles.GetLength(1);
+		tiles = new GameObject[tmpX,tmpY];
+		
 		float halfX = (terrain.rows - 1)/2.0f;
 		float halfZ = (terrain.cols - 1)/2.0f;
 				
@@ -23,7 +26,7 @@ public class PrettyTerrain : MonoBehaviour {
 		Vector2[] newUV = new Vector2[newVertices.Length];
 		
 		Vector2 uvScale = new Vector2 (1.0f / (terrain.rows - 1), 1.0f / (terrain.cols - 1));
-		Vector3 sizeScale = new Vector3 (size.x / (terrain.rows - 1), size.y / 100.0f, size.z / (terrain.rows - 1));
+		Vector3 sizeScale = new Vector3 (1.0f / (terrain.rows - 1), 1.0f / 100.0f, 1.0f / (terrain.rows - 1));
 		
 		int rects = (terrain.rows - 1) * (terrain.cols - 1);
 		int[] newTriangles = new int[rects*2*3];
@@ -52,7 +55,6 @@ public class PrettyTerrain : MonoBehaviour {
 				newVertices[i*terrain.cols + j] = new Vector3(x,y,z);
 				newUV[i*terrain.cols + j] = Vector2.Scale(new Vector2(x,z),uvScale);
 				
-				
 				GameObject tmpObj;
 				
 				switch(terrain.tiles[i,j].type)
@@ -76,16 +78,29 @@ public class PrettyTerrain : MonoBehaviour {
 					tmpObj = null;
 					break;
 				}
-	
 				
-				if (tmpObj != null)
-				{
-					Vector3 newLoc = Vector3.Scale(new Vector3(x,y,z),this.transform.localScale);
-					GameObject tmp = (GameObject) Instantiate(tmpObj, newLoc,Quaternion.identity);
-					tmp.transform.localScale = Vector3.Scale(new Vector3(.5f,.5f,.5f),tmp.transform.localScale);
-	
-					terrain.tiles[i,j].tileObj = tmp;
+				GameObject tileObj = new GameObject("tile[" + i + "," + j + "]");
+				tileObj.transform.position = Vector3.Scale(new Vector3(x,y,z),
+				                                                gameObject.transform.localScale);
+				tileObj.transform.parent = this.gameObject.transform;
+				tileObj.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+								
+				//add the mesh object as a child of the tile
+				if (tmpObj != null){
+					GameObject tmpDispObj = (GameObject) Instantiate(tmpObj);
+					tmpDispObj.transform.parent = tileObj.transform;
+					tmpDispObj.transform.localPosition = Vector3.zero;
+					tmpDispObj.name = "DispObj";
+					terrain.tiles[i,j].dispObj = tmpDispObj;
 				}
+				
+				//add the fire particle system as a child of the tile
+				GameObject tmpFireObj = (GameObject) Instantiate(FireObj);
+				tmpFireObj.transform.parent = tileObj.transform;
+				tmpFireObj.transform.localPosition = Vector3.zero;
+				tmpFireObj.name = "FireObj";
+				tmpFireObj.SetActiveRecursively(false);
+				terrain.tiles[i,j].fireObj = tmpFireObj;
 			}
 		}
 		
@@ -96,9 +111,6 @@ public class PrettyTerrain : MonoBehaviour {
 		mesh.uv = newUV;
 		mesh.RecalculateNormals();
 		mesh.Optimize(); //Higher load time, faster draw speed
-		//terrainObjMeshFilter.mesh = tmp;
-		//mesh.bounds = new Bounds(Vector3.zero,
-		//                         new Vector3(halfX*sizeScale.x,sizeScale.y,halfZ*sizeScale.z));
 		
 		this.GetComponent<MeshFilter>().mesh = mesh;
 		this.GetComponent<MeshCollider>().sharedMesh = mesh;
@@ -111,8 +123,8 @@ public class PrettyTerrain : MonoBehaviour {
 		terrain.randomize(terrain.Mtn_Spawns,terrain.Water_Spawns,terrain.Tree_Spawns);
 		terrain.smooth(.00000001, 3000, 0.9);
 		terrain.toTerrainTiles();
-		
 		terrain.startFinished = true;
+		
 		this.generateMesh();
 	}
 }

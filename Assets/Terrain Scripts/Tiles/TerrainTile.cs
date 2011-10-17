@@ -15,8 +15,10 @@ public class TerrainTile : ScriptableObject{
 	public float height;
 	public float heatIndex;
 	public TileType type;
-	public GameObject tileObj;
+	public GameObject fireObj;
+	public GameObject dispObj;
 	
+	public float heatThresh;
 	private float newheat=0;
 	
 	public void init(float height){
@@ -34,8 +36,11 @@ public class TerrainTile : ScriptableObject{
 	public void updateHeat()
 	{
 		heatIndex += newheat;
-		newheat=0;		
+		newheat=0;
+		
+		if (this.heatIndex > this.heatThresh){
+			this.fireObj.SetActiveRecursively(true);
+		}
 	}
-	
 	
 }
