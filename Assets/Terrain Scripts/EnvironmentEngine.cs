@@ -9,7 +9,18 @@ public class EnvironmentEngine : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
+	}
 	
+	public void setFire(int i, int j){
+		if (i > mapgen.tiles.GetLength(0))
+			return;
+		if (i < 0)
+			return;
+		if (j > mapgen.tiles.GetLength(1))
+			return;
+		if (j < 0)
+			return;
+		mapgen.tiles[i,j].heatIndex += 30;
 	}
 	
 	// Update is called once per frame

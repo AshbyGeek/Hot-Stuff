@@ -10,23 +10,31 @@ public class PrettyTerrain : MonoBehaviour {
 	public GameObject plains_obj;
 	public GameObject mountain_obj;
 	public GameObject brush_obj;
-	
 	public GameObject FireObj;
 	
+	public Vector3 treeScale = new Vector3(1.0f,1.0f,1.0f);
+	
+	private float halfX;
+	private float halfZ;
+	private Vector3 sizeScale;
+	
 	void generateMesh(){
+		//adjust the scales of the input objects
+		tree_obj.transform.localScale = Vector3.Scale(treeScale,tree_obj.transform.localScale);
+		
 		int tmpX = terrain.tiles.GetLength(0);
 		int tmpY = terrain.tiles.GetLength(1);
 		tiles = new GameObject[tmpX,tmpY];
 		
-		float halfX = (terrain.rows - 1)/2.0f;
-		float halfZ = (terrain.cols - 1)/2.0f;
+		halfX = (terrain.rows - 1)/2.0f;
+		halfZ = (terrain.cols - 1)/2.0f;
 				
 		//make a mesh object with each vertex representing a point in the log matrix
 		Vector3[] newVertices = new Vector3[terrain.rows * terrain.cols];
 		Vector2[] newUV = new Vector2[newVertices.Length];
 		
 		Vector2 uvScale = new Vector2 (1.0f / (terrain.rows - 1), 1.0f / (terrain.cols - 1));
-		Vector3 sizeScale = new Vector3 (1.0f / (terrain.rows - 1), 1.0f / 100.0f, 1.0f / (terrain.rows - 1));
+		sizeScale = new Vector3 (1.0f / (terrain.rows - 1), 1.0f / 100.0f, 1.0f / (terrain.rows - 1));
 		
 		int rects = (terrain.rows - 1) * (terrain.cols - 1);
 		int[] newTriangles = new int[rects*2*3];
@@ -117,6 +125,22 @@ public class PrettyTerrain : MonoBehaviour {
 		mesh.RecalculateBounds();
 	}
 	
+	public int[] tileFromPos(Vector3 pos){
+		float i = pos.x/sizeScale.x;
+		float j = pos.z/sizeScale.z;
+		
+		i /= gameObject.transform.localScale.x;
+		j /= gameObject.transform.localScale.z;
+		
+		i += halfX;
+		j += halfZ;
+		
+		i = Mathf.Round(i);
+		j = Mathf.Round(j);
+		
+		return new int[2]{(int) i, (int) j};
+	}
+	
 	void Start () {
 		terrain.init(terrain.rows,terrain.cols);
 
@@ -126,5 +150,7 @@ public class PrettyTerrain : MonoBehaviour {
 		terrain.startFinished = true;
 		
 		this.generateMesh();
+		
+		//terrain.tiles[0,0].heatIndex = 30.0f;
 	}
 }

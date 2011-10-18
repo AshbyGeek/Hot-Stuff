@@ -19,11 +19,14 @@ var inputMoveDirection : Vector3 = Vector3.zero;
 @System.NonSerialized
 var inputJump : boolean = false;
 
+
 class CharacterMotorMovement {
 	// The maximum horizontal speed when moving
 	var maxForwardSpeed : float = 10.0;
 	var maxSidewaysSpeed : float = 10.0;
 	var maxBackwardsSpeed : float = 10.0;
+	
+	var waterHeight : float = 0.0;
 	
 	// Curve for multiplying speed based on slope (negative = downwards)
 	var slopeSpeedMultiplier : AnimationCurve = AnimationCurve(Keyframe(-90, 1), Keyframe(0, 1), Keyframe(90, 0));
@@ -214,12 +217,16 @@ private function UpdateFunction () {
 	
 	// We always want the movement to be framerate independent.  Multiplying by Time.deltaTime does this.
 	var currentMovementOffset : Vector3 = velocity * Time.deltaTime;
-	
+		
 	// Find out how much we need to push towards the ground to avoid loosing grouning
 	// when walking down a step or over a sharp change in slope.
 	var pushDownOffset : float = Mathf.Max(controller.stepOffset, Vector3(currentMovementOffset.x, 0, currentMovementOffset.z).magnitude);
 	if (grounded)
 		currentMovementOffset -= pushDownOffset * Vector3.up;
+		
+	if (lastPosition.y < movement.waterHeight && currentMovementOffset.y < 0){
+		currentMovementOffset.y = 0;
+	}
 	
 	// Reset variables that will be set by collision function
 	movingPlatform.hitPlatform = null;
