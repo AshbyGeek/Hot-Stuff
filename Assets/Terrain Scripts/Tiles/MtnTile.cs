@@ -9,4 +9,7 @@ public class MtnTile : TerrainTile {
 		this.heatThresh = 10.0f;
 	}
 	//here we will do Mountain specific stuff
+	public override void updateFlames ()
+	{
+	}
 }

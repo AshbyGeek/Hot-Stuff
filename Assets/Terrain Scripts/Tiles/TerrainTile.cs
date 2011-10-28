@@ -20,6 +20,7 @@ public class TerrainTile : ScriptableObject{
 	
 	public float heatThresh;
 	private float newheat=0;
+	protected bool isFlaming=false;
 	
 	public void init(float height){
 		this.height = height;
@@ -37,10 +38,22 @@ public class TerrainTile : ScriptableObject{
 	{
 		heatIndex += newheat;
 		newheat=0;
-		
-		if (this.heatIndex > this.heatThresh){
+		updateFlames();
+	}
+	
+	//default behaviour for tiles, flame if the heat is abrove the threshold
+	//don't if its not
+	//override this function if a tile needs to behave differently
+	public virtual void updateFlames(){
+		if (!this.isFlaming && this.heatIndex > this.heatThresh){
 			this.fireObj.SetActiveRecursively(true);
+		}else if (this.isFlaming && this.heatIndex < this.heatThresh){
+			this.fireObj.SetActiveRecursively(false);
 		}
+	}
+	
+	public virtual void startFire(){
+		heatIndex += 30;
 	}
 	
 }

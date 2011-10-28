@@ -26,7 +26,7 @@ class CharacterMotorMovement {
 	var maxSidewaysSpeed : float = 10.0;
 	var maxBackwardsSpeed : float = 10.0;
 	
-	var waterHeight : float = 0.0;
+	var MinHeightObject : Transform;
 	
 	// Curve for multiplying speed based on slope (negative = downwards)
 	var slopeSpeedMultiplier : AnimationCurve = AnimationCurve(Keyframe(-90, 1), Keyframe(0, 1), Keyframe(90, 0));
@@ -224,7 +224,10 @@ private function UpdateFunction () {
 	if (grounded)
 		currentMovementOffset -= pushDownOffset * Vector3.up;
 		
-	if (lastPosition.y < movement.waterHeight && currentMovementOffset.y < 0){
+	
+	//don't allow character to fall below the min height object
+	var tmp = movement.MinHeightObject.position.y + controller.height / 2.0f;
+	if (lastPosition.y < tmp && currentMovementOffset.y < 0){
 		currentMovementOffset.y = 0;
 	}
 	

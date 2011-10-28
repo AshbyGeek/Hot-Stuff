@@ -15,7 +15,7 @@ public class CharacterInteractions: MonoBehaviour {
 	void Update () {
 		if (Input.GetButtonUp("Fire1")){
 			int[] tile = terrain.tileFromPos(characterLoc.transform.localPosition);
-			engine.setFire(tile[0],tile[1]);
+			engine.StartFire(tile[0],tile[1]);
 		}
 	}
 }

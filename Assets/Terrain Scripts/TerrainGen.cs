@@ -3,12 +3,15 @@ using System.Collections;
 
 public class TerrainGen : MonoBehaviour {
 	
-    public const int mtn_thresh = 86;
-    public const int plain_thresh = 8;
-    public const int brush_thresh = 15;
-    public const int tree_thresh = 30;
-    public const int mtn_chain = 4;
-    public const int water_chain = 2;
+    public int mtn_thresh = 75;
+    public int tree_thresh = 46;
+    public int brush_thresh = 25;
+    public int plain_thresh = 17;
+	public int water_thresh = 7;
+	//anything lower than this is deep water
+	
+    public int mtn_chain = 4;
+    public int water_chain = 2;
 	
 
     private float[,] array;
@@ -34,10 +37,9 @@ public class TerrainGen : MonoBehaviour {
         this.rows = rows;
         this.array = new float[rows, cols];
         this.locked = new bool[rows, cols];
-
-        for (int i = 0; i < cols; i++)
-            for (int j = 0; j < rows; j++)
-                this.locked[i, j] = false;
+		
+		//use this to init lock values to 0
+        setAllLocks(false);
 
         for (int i = 0; i < rows; i++)
         {
@@ -45,6 +47,12 @@ public class TerrainGen : MonoBehaviour {
             	this.array[i,j] = 50;
         }
     }
+	
+	public void setAllLocks(bool state){
+        for (int i = 0; i < cols; i++)
+            for (int j = 0; j < rows; j++)
+                this.locked[i, j] = state;
+	}
 	
 	//make a collection of terrain tiles from the purely numeric array
 	public void toTerrainTiles(){
@@ -54,29 +62,32 @@ public class TerrainGen : MonoBehaviour {
 				float height = this.array[i,j];
 				TerrainTile curTile;
 								
-		        if (height > TerrainGen.mtn_thresh){
+		        if (height >= mtn_thresh){
 					MtnTile tmp = ScriptableObject.CreateInstance<MtnTile>();					tmp.init(height);
 		            curTile = (TerrainTile) tmp;
 				}
-		        else if (height > TerrainGen.tree_thresh){
+		        else if (height >= tree_thresh){
 					TreeTile tmp = ScriptableObject.CreateInstance<TreeTile>();
 					tmp.init(height);
 		            curTile = (TerrainTile) tmp;
 				}
-				else if (height >= TerrainGen.brush_thresh){
+				else if (height >= brush_thresh){
 					BrushTile tmp = ScriptableObject.CreateInstance<BrushTile>();
 					tmp.init(height);
 		            curTile = (TerrainTile) tmp;
 				}
-				else if (height >= TerrainGen.plain_thresh){
+				else if (height >= plain_thresh){
 					PlainTile tmp = ScriptableObject.CreateInstance<PlainTile>();
 					tmp.init(height);
 		            curTile = (TerrainTile) tmp;
 				}
-				else {
+				else if (height >= water_thresh){
 					WaterTile tmp = ScriptableObject.CreateInstance<WaterTile>();
 					tmp.init(height);
 		            curTile = (TerrainTile) tmp;
+				}
+				else{
+					curTile = null;
 				}
 				tiles[i,j] = curTile;
 			}
@@ -90,7 +101,7 @@ public class TerrainGen : MonoBehaviour {
             int randrow = Random.Range(1, this.rows - 2);
             int randcol = Random.Range(1, this.cols - 2);
             //this.lockElev(randrow,randcol,Random.Range(TerrainGen.mtn_thresh,100);
-            this.lockElev(randrow, randcol, 100);
+            this.lockBlock(randrow, randcol, 100);
 
             for (int x = 0; x < num_mtn; x++)
             {
@@ -100,7 +111,7 @@ public class TerrainGen : MonoBehaviour {
                 randrow = System.Math.Min(this.rows - 2, randrow);
                 randcol = System.Math.Max(1, randcol);
                 randcol = System.Math.Min(this.cols - 2, randcol);
-                this.lockElev(randrow, randcol, 100);
+                this.lockBlock(randrow, randcol, 100);
             }
         }
 
@@ -109,7 +120,7 @@ public class TerrainGen : MonoBehaviour {
             int randrow = Random.Range(0, this.rows - 1);
             int randcol = Random.Range(0, this.cols - 1);
             //this.lockElev(randrow,randcol,Random.Range(0,self.water_thresh-10);
-            this.lockElev(randrow, randcol, 0);
+            this.lockBlock(randrow, randcol, 0);
 
             for (int x = 0; x < num_mtn; x++)
             {
@@ -119,7 +130,7 @@ public class TerrainGen : MonoBehaviour {
                 randrow = System.Math.Min(this.rows - 1, randrow);
                 randcol = System.Math.Max(0, randcol);
                 randcol = System.Math.Min(this.cols - 1, randcol);
-                this.lockElev(randrow, randcol, 0);
+                this.lockBlock(randrow, randcol, 0);
             }
         }
 
@@ -128,13 +139,13 @@ public class TerrainGen : MonoBehaviour {
         {
             int randrow = Random.Range(0, this.rows - 1);
             int randcol = Random.Range(0, this.cols - 1);
-            this.lockElev(randrow, randcol, Random.Range(TerrainGen.brush_thresh, TerrainGen.mtn_thresh - 1));
+            this.lockBlock(randrow, randcol, Random.Range(brush_thresh, mtn_thresh - 1));
             //this.lockElev(randrow, randcol, 0);
         }
 
     }
 
-    public void lockElev(int row, int col, int value)
+    public void lockBlock(int row, int col, int value)
     {
 		if ((row+1 < this.rows 	&& this.locked[row+1, col]) ||
 		    (row-1 > 0 			&& this.locked[row-1, col]) ||
@@ -165,6 +176,41 @@ public class TerrainGen : MonoBehaviour {
 		}
     }
 	
+	public void lockPoint(int row, int col, int value){
+		this.array[row,col] = value;
+		this.locked[row,col] = true;
+	}
+	
+	public void lockEdges(){
+		//lock the corners to very deep values
+		lockPoint(0,0,-20);
+		lockPoint(0,cols-1,-20);
+		lockPoint(rows-1,0,-20);
+		lockPoint(rows-1,cols-1,-20);
+		
+		//smooth to get the values between
+		smooth(.0000001,4,.5);
+		
+		for (int j = 0; j < cols; j+= cols-1){
+			for (int i = 0; i < rows; i++){
+				if (array[i,j] >= water_thresh)
+					lockPoint(i,j,water_thresh);
+				else
+					locked[i,j] = true;
+			}
+		}
+		for (int i = 0; i < rows; i+= rows-1){
+			for (int j = 0; j < cols; j++){
+				if (array[i,j] >= water_thresh)
+					lockPoint(i,j,water_thresh);
+				else
+					locked[i,j] = true;
+			}
+		}
+	}
+	
+	
+	//default smoother
 	public void smooth(){
 		this.smooth(.00000001, 3000, 0.9);
 	}
