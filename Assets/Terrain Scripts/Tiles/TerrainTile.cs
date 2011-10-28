@@ -28,7 +28,6 @@ public class TerrainTile : ScriptableObject{
 		this.type = TerrainTile.TileType.none;
 	}
 	
-	
 	public void accumulateHeat(float more)
 	{
 		newheat += more;

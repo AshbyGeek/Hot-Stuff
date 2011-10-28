@@ -55,7 +55,7 @@ public class PrettyTerrain : MonoBehaviour {
 				float z = (j - halfZ)*sizeScale.z;
 				float y;
 				if (terrain.tiles[i,j] == null)
-					y = 0;
+					y = terrain.array[i,j]*sizeScale.y;
 				else
 					y = terrain.tiles[i, j].height*sizeScale.y;
 				
@@ -145,16 +145,28 @@ public class PrettyTerrain : MonoBehaviour {
 	
 	void Start () {
 		terrain.init(terrain.rows,terrain.cols);
-		terrain.lockEdges();
 		
-		terrain.randomize(terrain.Mtn_Spawns,terrain.Water_Spawns,terrain.Tree_Spawns);
-		terrain.smooth(.00000001, 3000, 0.9);
+		//lock the corners to very deep values
+		terrain.lockPoint(0,0,-100);
+		terrain.lockPoint(0,terrain.cols-1,-100);
+		terrain.lockPoint(terrain.rows-1,0,-100);
+		terrain.lockPoint(terrain.rows-1,terrain.cols-1,-100);
 		
-		//terrain.setAllLocks(false);
-		//terrain.smooth(1,3,0.5);
+		terrain.lockEdges(4,-50,terrain.water_thresh-10);
+		terrain.smooth(.01, 15, 1.9);
+		terrain.setEdgeLocks(true, terrain.water_thresh - 5);
+		terrain.lockBelowVal(terrain.water_thresh);
+		
+		terrain.lockWaterBorders(20,3);
+		terrain.lockInnerTerrain(5,10,3,5,2,5);
+		
+		//terrain.randomize(terrain.Mtn_Spawns,terrain.Water_Spawns,terrain.Tree_Spawns);
+		terrain.smooth(.00001, 2000, .9);
+		
+		terrain.setAllLocks(false);
+		terrain.smooth(.01,5,.2);
 		
 		terrain.toTerrainTiles();
-		terrain.startFinished = true;
 		
 		this.generateMesh();
 		
