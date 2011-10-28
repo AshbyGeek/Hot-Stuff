@@ -13,7 +13,7 @@ public class EnvironmentEngine : MonoBehaviour {
 	
 	
 	//called when the user wants to start a fire
-	public void StartFire(int i, int j){
+	public void addFire(int i, int j){
 		if (i > mapgen.tiles.GetLength(0))
 			return;
 		if (i < 0)

@@ -52,7 +52,7 @@ public class TerrainTile : ScriptableObject{
 	}
 	
 	public virtual void startFire(){
-		heatIndex += 30;
+		heatIndex += 4;
 	}
 	
 }

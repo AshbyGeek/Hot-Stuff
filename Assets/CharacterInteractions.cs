@@ -5,6 +5,7 @@ public class CharacterInteractions: MonoBehaviour {
 	public EnvironmentEngine engine;
 	public PrettyTerrain terrain;
 	public GameObject characterLoc;
+	public GameObject fireObj;
 	
 	// Use this for initialization
 	void Start () {
@@ -13,9 +14,14 @@ public class CharacterInteractions: MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonUp("Fire1")){
+		if (Input.GetButtonDown("Fire1"))
+			fireObj.active = true;
+		if (Input.GetButtonUp("Fire1"))
+			fireObj.active = false;
+		
+		if (Input.GetButton("Fire1")){
 			int[] tile = terrain.tileFromPos(characterLoc.transform.localPosition);
-			engine.StartFire(tile[0],tile[1]);
+			engine.addFire(tile[0],tile[1]);
 		}
 	}
 }
