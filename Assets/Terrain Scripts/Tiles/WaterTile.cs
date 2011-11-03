@@ -24,4 +24,6 @@ public class WaterTile : TerrainTile {
 		if (isFlamable)
 			base.startFire ();
 	}
+	
+
 }

@@ -10,4 +10,18 @@ public class TreeTile : TerrainTile{
 	}
 	
 	//here we will do tree specific stuff
+	float treeFireBoost=1f;
+	
+	public override void accumulateHeat(float more)
+	{
+		newheat += more*treeFireBoost;
+	}
+	
+	public override void updateHeat()
+	{
+		heatIndex += newheat;
+		newheat=0;
+		updateFlames();
+	}
+	
 }
