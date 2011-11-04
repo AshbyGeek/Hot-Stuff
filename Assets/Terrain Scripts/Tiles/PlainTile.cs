@@ -9,4 +9,6 @@ public class PlainTile : TerrainTile {
 		this.heatThresh = 3.0f;
 	}
 	//here we will do plains specific stuff
+	
+	
 }

@@ -19,7 +19,7 @@ public class TerrainTile : ScriptableObject{
 	public GameObject dispObj;
 	
 	public float heatThresh;
-	private float newheat=0;
+	protected float newheat=0;
 	protected bool isFlaming=false;
 	
 	public void init(float height){
@@ -28,17 +28,19 @@ public class TerrainTile : ScriptableObject{
 		this.type = TerrainTile.TileType.none;
 	}
 	
-	public void accumulateHeat(float more)
+	public virtual void accumulateHeat(float more)
 	{
-		newheat += more;
+		// do nothing
+		return;
 	}
 	
-	public void updateHeat()
+	public virtual void updateHeat()
 	{
-		heatIndex += newheat;
-		newheat=0;
-		updateFlames();
+		//do nothing
+		return;
 	}
+	
+	
 	
 	//default behaviour for tiles, flame if the heat is abrove the threshold
 	//don't if its not
