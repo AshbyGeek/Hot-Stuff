@@ -27,7 +27,11 @@ public class CharacterInteractions: MonoBehaviour {
 			fireObj.active = false;
 		
 		//tell the engine to add heat to the current tile
-		Vector2 tileInd = terrain.tileFromPos(characterLoc.transform.localPosition);
+		//Vector2 tileInd = terrain.tileFromPos(characterLoc.transform.localPosition);
+		Transform firestick = characterLoc.transform.Find("firestick");
+		
+		Vector2 tileInd = terrain.tileFromPos(firestick.position);
+		                                      
 		if (Input.GetButton("Fire1")){
 			engine.addFire((int)tileInd.x,(int)tileInd.y);
 		}
@@ -42,7 +46,7 @@ public class CharacterInteractions: MonoBehaviour {
 		//check if the character has died
 		if (health < 0)
 		{
-			killCharacter();
+			//killCharacter();
 		}
 		
 		healthBar.barDisplay = health/maxHealth;
