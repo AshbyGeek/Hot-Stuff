@@ -1,0 +1,23 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Level-gui.cs">
+    <Files>
+      <File FileName="Assets\CharacterInteractions.cs" Line="37" Column="4" />
+      <File FileName="Assets\Terrain Scripts\PrettyTerrain.cs" Line="149" Column="1" />
+      <File FileName="Assets\Terrain Scripts\TerrainGen.cs" Line="387" Column="1" />
+      <File FileName="Assets\Terrain Scripts\EnvironmentEngine.cs" Line="36" Column="40" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TerrainTile.cs" Line="61" Column="20" />
+      <File FileName="Assets\Terrain Scripts\Tiles\WaterTile.cs" Line="7" Column="24" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TreeTile.cs" Line="12" Column="39" />
+      <File FileName="Assets\Terrain Scripts\Tiles\PlainTile.cs" Line="1" Column="1" />
+      <File FileName="Assets\Terrain Scripts\Tiles\MtnTile.cs" Line="14" Column="3" />
+      <File FileName="Assets\Terrain Scripts\Tiles\BrushTile.cs" Line="10" Column="3" />
+      <File FileName="Assets\Loader\GUI_Testing.cs" Line="5" Column="1" />
+      <File FileName="Level-gui.cs" Line="7" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -36,7 +36,7 @@ public class CharacterInteractions: MonoBehaviour {
 		//   the heat of the tile
 		TerrainTile tile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
 		if (tile.isOnFire()){
-			health -= (tile.heatIndex - tile.heatThresh)*.5f;
+			health -= 1;
 		}
 		
 		//check if the character has died
