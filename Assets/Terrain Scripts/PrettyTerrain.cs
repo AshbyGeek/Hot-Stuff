@@ -10,7 +10,7 @@ public class PrettyTerrain : MonoBehaviour {
 	public GameObject mountain_obj;
 	public GameObject brush_obj;
 	public GameObject FireObj;
-	
+		
 	public Vector3 treeScale = new Vector3(1.0f,1.0f,1.0f);
 	
 	private float halfX;
@@ -29,7 +29,7 @@ public class PrettyTerrain : MonoBehaviour {
 		Vector2[] newUV = new Vector2[newVertices.Length];
 		
 		Vector2 uvScale = new Vector2 (1.0f / (terrain.rows - 1), 1.0f / (terrain.cols - 1));
-		sizeScale = new Vector3 (1.0f / (terrain.rows - 1), 1.0f / 100.0f, 1.0f / (terrain.rows - 1));
+		sizeScale = new Vector3 (1.0f / (terrain.rows - 1), 1.0f / 100.0f, 1.0f / (terrain.cols - 1));
 		
 		int rects = (terrain.rows - 1) * (terrain.cols - 1);
 		int[] newTriangles = new int[rects*2*3];
@@ -94,7 +94,12 @@ public class PrettyTerrain : MonoBehaviour {
 					if (tmpObj != null){
 						GameObject tmpDispObj = (GameObject) Instantiate(tmpObj);
 						tmpDispObj.transform.parent = tileObj.transform;
-						tmpDispObj.transform.localPosition = Vector3.zero;
+						
+						Vector3 tmpVect = Random.insideUnitSphere;
+						Vector2 tmpXY = new Vector2(tmpVect.x,tmpVect.z);
+						tmpVect -= Vector3.up*(tmpXY.magnitude*2.5f);
+						tmpDispObj.transform.localPosition = Vector3.Scale(Random.insideUnitSphere - Vector3.up*2,sizeScale*2.0f);
+						
 						tmpDispObj.name = "DispObj";
 						terrain.tiles[i,j].dispObj = tmpDispObj;
 					}
@@ -127,7 +132,7 @@ public class PrettyTerrain : MonoBehaviour {
 		water_obj.transform.position = new Vector3(0,tmpY,0);
 	}
 	
-	public int[] tileFromPos(Vector3 pos){
+	public Vector2 tileFromPos(Vector3 pos){
 		float i = pos.x/sizeScale.x;
 		float j = pos.z/sizeScale.z;
 		
@@ -140,7 +145,7 @@ public class PrettyTerrain : MonoBehaviour {
 		i = Mathf.Round(i);
 		j = Mathf.Round(j);
 		
-		return new int[2]{(int) i, (int) j};
+		return new Vector2(i,j);
 	}
 	
 	void Start () {

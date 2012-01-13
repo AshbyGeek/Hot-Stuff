@@ -57,4 +57,8 @@ public class TerrainTile : ScriptableObject{
 		heatIndex += 4;
 	}
 	
+	public bool isOnFire(){
+		return heatIndex > heatThresh;
+	}
+	
 }
