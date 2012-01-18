@@ -34,9 +34,11 @@ public class CharacterInteractions: MonoBehaviour {
 		
 		//if the tile is flaming, reduce the character's health proportional to
 		//   the heat of the tile
-		TerrainTile tile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
-		if (tile.isOnFire()){
-			health -= 1;
+		if (tileInd.x < engine.mapgen.rows && tileInd.y < engine.mapgen.cols){
+			TerrainTile tile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
+			if (tile.isOnFire()){
+				health -= 1;
+			}
 		}
 		
 		//check if the character has died

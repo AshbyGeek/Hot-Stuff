@@ -7,6 +7,8 @@ Project("{2208D2CA-73CB-D570-3526-94E27607273B}") = "HotStuff2", "Assembly-CShar
 EndProject
 Project("{2208D2CA-73CB-D570-3526-94E27607273B}") = "HotStuff2", "Assembly-UnityScript-firstpass.unityproj", "{9B7B2522-58B8-E694-29FC-5A1B4014F916}"
 EndProject
+Project("{2208D2CA-73CB-D570-3526-94E27607273B}") = "HotStuff2", "Assembly-UnityScript.unityproj", "{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{9B7B2522-58B8-E694-29FC-5A1B4014F916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B7B2522-58B8-E694-29FC-5A1B4014F916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B7B2522-58B8-E694-29FC-5A1B4014F916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
