@@ -22,7 +22,7 @@ public class EnvironmentEngine : MonoBehaviour {
 			return;
 		if (j < 0)
 			return;
-		mapgen.tiles[i,j].heatIndex += 30;//startFire();
+		mapgen.tiles[i,j].heatIndex += 1;//startFire();
 	}
 	
 	// Update is called once per frame

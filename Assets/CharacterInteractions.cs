@@ -19,6 +19,9 @@ public class CharacterInteractions: MonoBehaviour {
 		healthBar = GetComponent<ProgressBar>();
 	}
 	
+	void Update(){
+	}
+	
 	void FixedUpdate () {
 		//turn the flamethrower on and off
 		if (Input.GetButtonDown("Fire1"))
@@ -26,15 +29,15 @@ public class CharacterInteractions: MonoBehaviour {
 		if (Input.GetButtonUp("Fire1"))
 			fireObj.active = false;
 		
-		//tell the engine to add heat to the current tile
+		//tell the engine to add heat to the current tile, but only if we're still inside the
+		//  tiles area
 		Vector2 tileInd = terrain.tileFromPos(characterLoc.transform.localPosition);
-		if (Input.GetButton("Fire1")){
-			engine.addFire((int)tileInd.x,(int)tileInd.y);
-		}
-		
-		//if the tile is flaming, reduce the character's health proportional to
-		//   the heat of the tile
-		if (tileInd.x < engine.mapgen.rows && tileInd.y < engine.mapgen.cols){
+		if (tileInd.x < engine.mapgen.rows && tileInd.y < engine.mapgen.cols &&
+		    tileInd.x >= 0 && tileInd.y >= 0){
+			if (Input.GetButton("Fire1")){
+				engine.addFire((int)tileInd.x,(int)tileInd.y);
+			}
+			
 			TerrainTile tile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
 			if (tile.isOnFire()){
 				health -= 1;
