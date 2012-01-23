@@ -11,19 +11,7 @@ public class WaterTile : TerrainTile {
 		this.type = TerrainTile.TileType.water;
 		this.isFlamable = false;
 		
-		this.heatThresh = 30.0f;
+		//this tile cannot catch on fire
+		this.heatThresh = 999999.0f;
 	}
-	
-	public override void updateFlames(){
-		if (isFlamable){
-			base.updateFlames();
-		}
-	}
-	
-	public override void startFire (){
-		if (isFlamable)
-			base.startFire ();
-	}
-	
-
 }

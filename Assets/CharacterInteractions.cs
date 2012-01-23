@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent (typeof (ProgressBar))]
 
@@ -20,28 +21,31 @@ public class CharacterInteractions: MonoBehaviour {
 	}
 	
 	void Update(){
+		//turn the flamethrower on and off
+		if (Input.GetButtonDown("Fire1"))
+			fireObj.GetComponent<ParticleEmitter>().emit = true;
+		if (Input.GetButtonUp("Fire1"))
+			fireObj.GetComponent<ParticleEmitter>().emit = false;
 	}
 	
 	void FixedUpdate () {
-		//turn the flamethrower on and off
-		if (Input.GetButtonDown("Fire1"))
-			fireObj.active = true;
-		if (Input.GetButtonUp("Fire1"))
-			fireObj.active = false;
 		
 		//tell the engine to add heat to the current tile, but only if we're still inside the
 		//  tiles area
 		Vector2 tileInd = terrain.tileFromPos(characterLoc.transform.localPosition);
-		if (tileInd.x < engine.mapgen.rows && tileInd.y < engine.mapgen.cols &&
-		    tileInd.x >= 0 && tileInd.y >= 0){
-			if (Input.GetButton("Fire1")){
-				engine.addFire((int)tileInd.x,(int)tileInd.y);
-			}
-			
+		try{
 			TerrainTile tile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
-			if (tile.isOnFire()){
-				health -= 1;
+		
+			if (tile != null){
+				if (Input.GetButton("Fire1")){
+					engine.addFire((int)tileInd.x,(int)tileInd.y);
+				}
+				
+				if (tile.isOnFire()){
+					health -= 1;
+				}
 			}
+		}catch{
 		}
 		
 		//check if the character has died
