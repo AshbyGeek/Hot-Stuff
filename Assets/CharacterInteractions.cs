@@ -19,7 +19,7 @@ public class CharacterInteractions: MonoBehaviour {
 		healthBar = GetComponent<ProgressBar>();
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 		//turn the flamethrower on and off
 		if (Input.GetButtonDown("Fire1"))
 			fireObj.active = true;

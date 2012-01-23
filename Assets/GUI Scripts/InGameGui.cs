@@ -2,25 +2,40 @@ using UnityEngine;
 using System.Collections;
 
 public class InGameGui : MonoBehaviour {
-	private bool CameraMode;
+	private bool cameraMode = true; //camera starts in first person mode
+	private bool paused = false;
 	
 	public GameObject charCam;
 	public GameObject mapCam;
 	
-	void Start(){
-		CameraMode = true; //camera is first person
-	}
-	
 	void Update(){
 		if (Input.GetButtonUp("Camera")){
-			if (CameraMode){
+			if (cameraMode){
 				charCam.active = false;
 				mapCam.active = true;
-				CameraMode = false;
+				cameraMode = false;
 			}else{
 				charCam.active = true;
 				mapCam.active = false;
-				CameraMode = true;
+				cameraMode = true;
+			}
+		}
+		if (Input.GetButtonUp("Menu")){
+			paused = !paused;
+			if (paused)
+				//this stops game time
+				Time.timeScale = 0;
+			else
+				Time.timeScale = 1;
+		}
+	}
+	
+	void OnGUI(){
+		if (paused){
+			bool done = Settings_GUI.settingsMenu();
+			if (done){
+				paused = false;
+				Time.timeScale = 1;
 			}
 		}
 	}
