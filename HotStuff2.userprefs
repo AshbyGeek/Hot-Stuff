@@ -2,11 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Terrain Scripts\EnvironmentEngine.cs">
     <Files>
-      <File FileName="Assets\GUI Scripts\Settings_GUI.cs" Line="7" Column="1" />
-      <File FileName="Assets\GUI Scripts\InGameGui.cs" Line="39" Column="5" />
-      <File FileName="Assets\Pause Menu\PauseMenu.js" Line="1" Column="1" />
-      <File FileName="Assets\GUI Scripts\Loader_GUI.cs" Line="12" Column="7" />
-      <File FileName="Assets\Terrain Scripts\EnvironmentEngine.cs" Line="36" Column="1" />
+      <File FileName="Assets\CharacterInteractions.cs" Line="49" Column="4" />
+      <File FileName="Assets\Terrain Scripts\EnvironmentEngine.cs" Line="27" Column="35" />
+      <File FileName="Assets\Terrain Scripts\PrettyTerrain.cs" Line="147" Column="3" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TerrainTile.cs" Line="55" Column="2" />
+      <File FileName="Assets\Terrain Scripts\Tiles\TreeTile.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
