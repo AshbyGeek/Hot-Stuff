@@ -2,6 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Terrain Scripts/PrettyTerrain.cs">
     <Files>
+      <File FileName="Assets/Terrain Scripts/PrettyTerrain.cs" Line="85" Column="7" />
       <File FileName="Assets/Terrain Scripts/EnvironmentEngine.cs" Line="24" Column="11" />
       <File FileName="Assets/Terrain Scripts/Tiles/WaterTile.cs" Line="1" Column="1" />
       <File FileName="Assets/Terrain Scripts/Tiles/BrushTile.cs" Line="1" Column="1" />
@@ -11,7 +12,6 @@
       <File FileName="Assets/Standard Assets/Character Controllers/Sources/Scripts/CharacterMotor.js" Line="1" Column="1" />
       <File FileName="Assets/CharacterInteractions.cs" Line="43" Column="16" />
       <File FileName="Assets/Terrain Scripts/TerrainGen.cs" Line="67" Column="43" />
-      <File FileName="Assets/Terrain Scripts/PrettyTerrain.cs" Line="85" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
