@@ -44,7 +44,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CharacterInteractions.cs" />
+     <Compile Include="Assets\Character Scripts\CharacterHealth.cs" />
+     <Compile Include="Assets\Character Scripts\CharacterInteractions.cs" />
+     <Compile Include="Assets\Character Scripts\ItemController.cs" />
+     <Compile Include="Assets\Character Scripts\Weapons\ItemPickup.cs" />
+     <Compile Include="Assets\Character Scripts\Weapons\MolotovCocktail.cs" />
      <Compile Include="Assets\Extra GUI Skins\SkinTest.cs" />
      <Compile Include="Assets\GUI Scripts\InGameGui.cs" />
      <Compile Include="Assets\GUI Scripts\Loader_GUI.cs" />
@@ -53,6 +57,7 @@
      <Compile Include="Assets\Terrain Scripts\EnvironmentEngine.cs" />
      <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
      <Compile Include="Assets\Terrain Scripts\TerrainGen.cs" />
+     <Compile Include="Assets\Terrain Scripts\Tile_GameObject.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\BrushTile.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\MtnTile.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\PlainTile.cs" />

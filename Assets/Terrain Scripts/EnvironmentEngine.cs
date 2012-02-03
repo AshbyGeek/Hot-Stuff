@@ -14,6 +14,9 @@ public class EnvironmentEngine : MonoBehaviour {
 	
 	//called when the user wants to start a fire
 	public void addFire(int i, int j){
+		addFire(i,j,0.1f);
+	}
+	public void addFire(int i, int j, float amount){
 		if (i > mapgen.tiles.GetLength(0))
 			return;
 		if (i < 0)
@@ -22,9 +25,16 @@ public class EnvironmentEngine : MonoBehaviour {
 			return;
 		if (j < 0)
 			return;
-		if (mapgen.tiles[i,j].heatThresh >= 999999.0f)
+		addFire(mapgen.tiles[i,j], amount);
+		
+	}
+	public void addFire(TerrainTile tile){
+		addFire(tile,0.1f);
+	}
+	public void addFire(TerrainTile tile, float amount){
+		if (tile.heatThresh >= 999999.0f)
 			return;
-		mapgen.tiles[i,j].heatIndex += 0.1f;
+		tile.heatIndex += amount;
 	}
 	
 	// Update is called once per frame

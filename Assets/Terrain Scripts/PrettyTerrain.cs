@@ -89,6 +89,9 @@ public class PrettyTerrain : MonoBehaviour {
 					                                                gameObject.transform.localScale);
 					tileObj.transform.parent = this.gameObject.transform;
 					tileObj.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+					
+					Tile_GameObject tmp = tileObj.AddComponent<Tile_GameObject>();
+					tmp.tile = terrain.tiles[i,j];
 									
 					//add the mesh object as a child of the tile
 					if (tmpObj != null){

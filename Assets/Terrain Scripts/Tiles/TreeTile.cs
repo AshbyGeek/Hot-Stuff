@@ -14,7 +14,8 @@ public class TreeTile : TerrainTile{
 	
 	public override void accumulateHeat(float more)
 	{
-		newheat += more*treeFireBoost;
+		if (heatThresh < maxHeat)
+			newheat += more*treeFireBoost;
 	}
 	
 	public override void updateHeat()

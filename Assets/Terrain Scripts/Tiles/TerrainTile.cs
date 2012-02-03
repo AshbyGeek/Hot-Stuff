@@ -19,6 +19,11 @@ public class TerrainTile : ScriptableObject{
 	public GameObject dispObj;
 	
 	public float heatThresh;
+	
+	//This caps the level of the heat
+	//so that we don't have ridiculously hot fires
+	public float maxHeat;
+	
 	protected float newheat=0;
 	protected bool isFlaming=false;
 	
@@ -26,6 +31,7 @@ public class TerrainTile : ScriptableObject{
 		this.height = height;
 		this.heatIndex = 0;
 		this.type = TerrainTile.TileType.none;
+		this.maxHeat = 10;
 	}
 	
 	public virtual void accumulateHeat(float more)
@@ -48,13 +54,15 @@ public class TerrainTile : ScriptableObject{
 	public virtual void updateFlames(){
 		if (!this.isFlaming && this.heatIndex > this.heatThresh){
 			this.fireObj.SetActiveRecursively(true);
+			isFlaming = true;
 		}else if (this.isFlaming && this.heatIndex < this.heatThresh){
 			this.fireObj.SetActiveRecursively(false);
+			isFlaming = false;
 		}
 	}
 	
 	public bool isOnFire(){
-		return heatIndex > heatThresh;
+		return isFlaming;
 	}
 	
 }

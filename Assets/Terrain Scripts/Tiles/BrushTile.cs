@@ -13,7 +13,9 @@ public class BrushTile : TerrainTile {
 	
 	public override void accumulateHeat(float more)
 	{
-		newheat += more*brushFireBoost;
+		if (heatIndex < maxHeat){
+			newheat += more*brushFireBoost;
+		}
 	}
 	
 	public override void updateHeat()
@@ -21,6 +23,5 @@ public class BrushTile : TerrainTile {
 		heatIndex += newheat;
 		newheat=0;
 		updateFlames();
-	}
-	
+	}	
 }

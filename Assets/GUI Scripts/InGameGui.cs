@@ -5,18 +5,18 @@ public class InGameGui : MonoBehaviour {
 	private bool cameraMode = true; //camera starts in first person mode
 	private bool paused = false;
 	
-	public GameObject charCam;
-	public GameObject mapCam;
-	
+	public Camera charCam;
+	public Camera mapCam;
+
 	void Update(){
 		if (Input.GetButtonUp("Camera")){
 			if (cameraMode){
-				charCam.active = false;
-				mapCam.active = true;
+				charCam.enabled = false;
+				mapCam.enabled = true;
 				cameraMode = false;
 			}else{
-				charCam.active = true;
-				mapCam.active = false;
+				charCam.enabled = true;
+				mapCam.enabled = false;
 				cameraMode = true;
 			}
 		}
