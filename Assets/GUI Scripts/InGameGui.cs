@@ -7,6 +7,10 @@ public class InGameGui : MonoBehaviour {
 	
 	public Camera charCam;
 	public Camera mapCam;
+	
+	void Start(){
+		Screen.showCursor = false;
+	}
 
 	void Update(){
 		if (Input.GetButtonUp("Camera")){

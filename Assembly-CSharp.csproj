@@ -46,9 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Character Scripts\CharacterHealth.cs" />
      <Compile Include="Assets\Character Scripts\CharacterInteractions.cs" />
-     <Compile Include="Assets\Character Scripts\ItemController.cs" />
-     <Compile Include="Assets\Character Scripts\Weapons\ItemPickup.cs" />
-     <Compile Include="Assets\Character Scripts\Weapons\MolotovCocktail.cs" />
+     <Compile Include="Assets\Character Scripts\Inventory.cs" />
+     <Compile Include="Assets\Character Scripts\Items\Item.cs" />
+     <Compile Include="Assets\Character Scripts\Items\MolotovCocktail.cs" />
      <Compile Include="Assets\Extra GUI Skins\SkinTest.cs" />
      <Compile Include="Assets\GUI Scripts\InGameGui.cs" />
      <Compile Include="Assets\GUI Scripts\Loader_GUI.cs" />

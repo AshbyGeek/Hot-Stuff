@@ -1,14 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Character Scripts\Weapons\MolotovCocktail.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Character Scripts\Inventory.cs">
     <Files>
-      <File FileName="Assets\Character Scripts\Weapons\MolotovCocktail.cs" Line="19" Column="18" />
-      <File FileName="Assets\Character Scripts\CharacterHealth.cs" Line="25" Column="4" />
-      <File FileName="Assets\Character Scripts\CharacterInteractions.cs" Line="19" Column="16" />
-      <File FileName="Assets\Terrain Scripts\EnvironmentEngine.cs" Line="56" Column="12" />
-      <File FileName="Assets\Terrain Scripts\PrettyTerrain.cs" Line="138" Column="9" />
-      <File FileName="Assets\Character Scripts\ItemController.cs" Line="36" Column="32" />
-      <File FileName="Assets\Character Scripts\Weapons\ItemPickup.cs" Line="4" Column="31" />
+      <File FileName="Assets\Character Scripts\Items\MolotovCocktail.cs" Line="17" Column="50" />
+      <File FileName="Assets\Character Scripts\Inventory.cs" Line="115" Column="3" />
+      <File FileName="Assets\Character Scripts\Items\Item.cs" Line="30" Column="49" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
