@@ -4,7 +4,6 @@ using System.Collections;
 public class MolotovCocktail : Item {
 	public float throwSpeed = 25.0f;
 	public float heatAdded = 4.0f;
-	private bool thrown = false;
 	
 	void Awake() {
 		base.defPos = new Vector3(1.0f,0.6f,0.07f);
@@ -13,11 +12,10 @@ public class MolotovCocktail : Item {
 	
 	public override void useItem() {
 		base.useItem();
-		Camera tmp = Camera.current;
-		Vector3 throwDir = Vector3.forward + Vector3.up;
-		rigidbody.AddRelativeForce(throwDir * throwSpeed,ForceMode.Impulse);
+		Camera tmp = Camera.mainCamera;
+		Vector3 throwDir = tmp.transform.rotation * Vector3.forward;
+		rigidbody.AddForce(throwDir * throwSpeed,ForceMode.Impulse);
 		rigidbody.AddTorque(1,0,0,ForceMode.Impulse);
-		thrown = true;
 	}
 	
 	//use the collider to start a fire
