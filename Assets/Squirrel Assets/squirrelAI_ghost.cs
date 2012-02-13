@@ -1,38 +1,32 @@
 using UnityEngine;
 using System.Collections;
 
-public class squirrelAI : MonoBehaviour {
+public class squirrelAI_ghost : MonoBehaviour {
 	private GameObject[] characters;
 	
-	public float moveSpeed = 0.1f;
+	public float moveSpeed = 0.2f;
+	public float minDist = 1.0f;
 	
 	// Use this for initialization
 	void Start () {
 		characters = GameObject.FindGameObjectsWithTag("Player");
-		Debug.Log("number of players: " + characters.GetLength(0));
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		GameObject closest = null;
 		float closestDist = 99999999999999999999999.0f;
-		
-		Vector3 targetDir = Vector3.up;
 		foreach(GameObject tmp in characters){
 			Vector3 dif = tmp.transform.position - transform.position;
-			if (dif.sqrMagnitude < closestDist){
-				targetDir = dif;
+			if (dif.sqrMagnitude < closestDist && dif.sqrMagnitude > minDist){
 				closestDist = dif.sqrMagnitude;
 				closest = tmp;
 			}
 		}
 		
 		if (closest != null){
-			//rigidbody.velocity = Vector3.forward * moveSpeed;
-			targetDir.Normalize();
-			rigidbody.transform.LookAt(closest.transform, -Vector3.up);
-			//rigidbody.transform.position += targetDir * moveSpeed;
-			rigidbody.velocity += targetDir*moveSpeed;
+			transform.LookAt(closest.transform.position,-Vector3.up);
+			transform.position += transform.forward * moveSpeed;
 		}
 	}
 }

@@ -1,14 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\squirrelAI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Character Scripts\CharacterInteractions.cs">
     <Files>
-      <File FileName="Assets\SquirrelHealth.cs" Line="31" Column="35" />
       <File FileName="Assets\Character Scripts\Items\MolotovCocktail.cs" Line="6" Column="32" />
       <File FileName="Assets\Character Scripts\Inventory.cs" Line="115" Column="3" />
       <File FileName="Assets\Character Scripts\Items\Item.cs" Line="30" Column="49" />
       <File FileName="Assets\Character Scripts\CharacterHealth.cs" Line="5" Column="2" />
       <File FileName="Assets\Character Scripts\CharacterInteractions.cs" Line="8" Column="3" />
-      <File FileName="Assets\squirrelAI.cs" Line="26" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
