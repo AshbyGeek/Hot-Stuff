@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+[RequireComponent (typeof (Rigidbody))]
 public class CharacterInteractions: MonoBehaviour {
 	private EnvironmentEngine engine;
 	private PrettyTerrain terrain;

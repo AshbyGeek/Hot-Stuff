@@ -6,14 +6,14 @@ public class MolotovCocktail : Item {
 	public float heatAdded = 4.0f;
 	
 	void Awake() {
-		base.defPos = new Vector3(1.0f,0.6f,0.07f);
+		base.defPos = new Vector3(1.0f,1.206215f,0.148f);
 		//base.identifier = "Molotov Cocktail";
 	}
 	
 	public override void useItem() {
 		base.useItem();
-		Camera tmp = Camera.mainCamera;
-		Vector3 throwDir = tmp.transform.rotation * Vector3.forward;
+		Quaternion rot = Camera.mainCamera.transform.rotation;
+		Vector3 throwDir = rot * Vector3.forward;
 		rigidbody.AddForce(throwDir * throwSpeed,ForceMode.Impulse);
 		rigidbody.AddTorque(1,0,0,ForceMode.Impulse);
 	}

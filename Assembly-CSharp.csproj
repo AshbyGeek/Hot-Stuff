@@ -56,6 +56,7 @@
      <Compile Include="Assets\GUI Scripts\Settings_GUI.cs" />
      <Compile Include="Assets\Squirrel Assets\SquirrelHealth.cs" />
      <Compile Include="Assets\Squirrel Assets\SquirrelSpawner.cs" />
+     <Compile Include="Assets\Squirrel Assets\squirrelAI.cs" />
      <Compile Include="Assets\Squirrel Assets\squirrelAI_ghost.cs" />
      <Compile Include="Assets\Terrain Scripts\EnvironmentEngine.cs" />
      <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
