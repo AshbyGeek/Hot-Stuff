@@ -54,8 +54,9 @@
      <Compile Include="Assets\GUI Scripts\Loader_GUI.cs" />
      <Compile Include="Assets\GUI Scripts\ProgressBar.cs" />
      <Compile Include="Assets\GUI Scripts\Settings_GUI.cs" />
-     <Compile Include="Assets\SquirrelHealth.cs" />
-     <Compile Include="Assets\SquirrelSpawner.cs" />
+     <Compile Include="Assets\Squirrel Assets\SquirrelHealth.cs" />
+     <Compile Include="Assets\Squirrel Assets\SquirrelSpawner.cs" />
+     <Compile Include="Assets\Squirrel Assets\squirrelAI_ghost.cs" />
      <Compile Include="Assets\Terrain Scripts\EnvironmentEngine.cs" />
      <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
      <Compile Include="Assets\Terrain Scripts\TerrainGen.cs" />
@@ -66,7 +67,6 @@
      <Compile Include="Assets\Terrain Scripts\Tiles\TerrainTile.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\TreeTile.cs" />
      <Compile Include="Assets\Terrain Scripts\Tiles\WaterTile.cs" />
-     <Compile Include="Assets\squirrelAI.cs" />
      <None Include="Assets\Standard Assets\Skyboxes\ skybox info.txt" />
      <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
