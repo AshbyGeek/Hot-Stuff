@@ -4,7 +4,7 @@ using System.Collections;
 public class squirrelAI : MonoBehaviour {
 	private GameObject[] characters;
 	
-	public float moveSpeed = 1.0f;
+	public float moveSpeed = 0.1f;
 	
 	// Use this for initialization
 	void Start () {
