@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>9.0.21022</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{524A4D27-4DCE-A1D7-5E13-976D51C6F2C0}</ProjectGuid>
+	<ProjectGuid>{CCA2A515-655A-F118-2C90-4D5E403C5F07}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -51,11 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B4F5714A-335F-E1F8-3D5D-CA0A888EA57E}</Project>
+      <Project>{AD7E2FF0-39C9-735E-D3C9-DF77ED02B98A}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{9B7B2522-58B8-E694-29FC-5A1B4014F916}</Project>
+      <Project>{99E4AC7D-83E6-A86D-C633-AF2A01DD3A8E}</Project>
       <Name>Assembly-UnityScript-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

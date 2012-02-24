@@ -10,6 +10,7 @@ public class Loader_GUI : MonoBehaviour {
 	private Menu curMenu = Menu.Main;
 	
 	void OnGUI () {
+		Screen.showCursor = true;
 		if (curMenu == Loader_GUI.Menu.Main){
 			// Make a background box
 			int width = 100;

@@ -26,11 +26,14 @@ public class InGameGui : MonoBehaviour {
 		}
 		if (Input.GetButtonUp("Menu")){
 			paused = !paused;
-			if (paused)
+			if (paused){
 				//this stops game time
 				Time.timeScale = 0;
-			else
+				Screen.showCursor = true;
+			}else{
 				Time.timeScale = 1;
+				Screen.showCursor = false;
+			}
 		}
 	}
 	
@@ -40,6 +43,7 @@ public class InGameGui : MonoBehaviour {
 			if (done){
 				paused = false;
 				Time.timeScale = 1;
+				Screen.showCursor = false;
 			}
 		}
 	}

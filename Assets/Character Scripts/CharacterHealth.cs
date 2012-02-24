@@ -16,7 +16,7 @@ public class CharacterHealth : MonoBehaviour {
 		health = maxHealth;
 	}
 	
-	void FixedUpdate(){
+	void Update(){
 		CharacterInteractions tmp = GetComponent<CharacterInteractions>();
 		
 		if (tmp.curTile != null){
