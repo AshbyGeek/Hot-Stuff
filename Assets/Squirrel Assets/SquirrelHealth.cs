@@ -5,6 +5,8 @@ public class SquirrelHealth : MonoBehaviour {
 	public float health = 100;
 	public float maxHealth = 100;
 	
+	public AudioSource deathSound;
+	
 	private EnvironmentEngine engine;
 	private PrettyTerrain terrain;
 	private TerrainTile curTile;
@@ -18,17 +20,19 @@ public class SquirrelHealth : MonoBehaviour {
 		terrain = (PrettyTerrain) FindObjectOfType(typeof(PrettyTerrain));
 	}
 	
-	void FixedUpdate(){
+	void Update(){
 		Vector2 tileInd = terrain.tileFromPos(transform.localPosition);
 		try{
 			curTile = engine.mapgen.tiles[(int)tileInd.x,(int)tileInd.y];
 		}catch{
 			curTile = null;
 		}
-		
+	}
+	
+	void FixedUpdate(){
 		if (curTile != null){
 			if (curTile.isOnFire()){
-				health -= curTile.heatIndex/10.0f;
+				health -= curTile.heatIndex*Time.deltaTime/10.0f;
 			}
 		}
 		
@@ -41,5 +45,8 @@ public class SquirrelHealth : MonoBehaviour {
 	
 	void killSquirrel(){
 		Destroy(this.gameObject);
+		GameObject tmp = GameObject.Find("SquirrelLauncher");
+		tmp.GetComponent<SquirrelSpawner>().numSquirrels -= 1;
+		deathSound.Play();
 	}
 }

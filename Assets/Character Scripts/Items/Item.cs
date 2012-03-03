@@ -12,29 +12,34 @@ public class Item : MonoBehaviour {
 		//since its going into an inventory, don't let it move
 		//  and move it to its position on the character
 		inInventory = true;
-		this.gameObject.active = false;
-		this.GetComponent<Collider>().enabled = false;
-		rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+		deactivate();
 		transform.parent = inv.transform;
 		transform.localPosition = defPos;
 		transform.localRotation = Quaternion.identity;
 	}
 	
 	public void activate(){
-		this.gameObject.active = true;
+		gameObject.SetActiveRecursively(true);
 	}
 	
 	public void deactivate(){
-		this.gameObject.active = false;
+		gameObject.SetActiveRecursively(false);
 		rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-		this.GetComponent<Collider>().enabled = false;
+		enableColliders(false);
 	}
 	
 	public virtual void useItem(){
 		//Let this object wander about the map again
-		this.GetComponent<Collider>().enabled = true;
+		enableColliders(true);
 		transform.parent = null;
 		rigidbody.constraints = RigidbodyConstraints.None;
 		inInventory = false;
+	}
+	
+	private void enableColliders(bool enabled){
+		GetComponent<Collider>().enabled = enabled;
+		foreach (Collider curCollider in this.GetComponentsInChildren<Collider>()){
+			curCollider.enabled = enabled;
+		}
 	}
 }

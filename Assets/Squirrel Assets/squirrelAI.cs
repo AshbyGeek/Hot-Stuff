@@ -12,7 +12,6 @@ public class squirrelAI : MonoBehaviour {
 		Debug.Log("number of players: " + characters.GetLength(0));
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () {
 		GameObject closest = null;
 		float closestDist = 99999999999999999999999.0f;

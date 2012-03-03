@@ -6,6 +6,9 @@ public class Inventory : MonoBehaviour {
 	//this keeps track of items that are close enough to pick up
 	private List<Collider> inRange = new List<Collider>();
 	
+	//how close does an object need to be before it can be grabbed?
+	public float grabRange = 10.0f;
+	
 	//this class and the following field are used by the GUI
 	//  to keep track of how many of what kinds of items are
 	//  in inventory
@@ -102,25 +105,14 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 	
-	public void OnTriggerEnter(Collider other){
-		Item tmp = other.GetComponent<Item>();
-		if (tmp != null && !tmp.inInventory)
-			inRange.Add(other);
-	}
-	
-	public void OnTriggerExit(Collider other){
-		Item tmp = other.GetComponent<Item>();
-		if (tmp != null && !tmp.inInventory)
-			inRange.Remove(other);
-	}
-	
 	public void Update(){
 		if (Input.GetButton("Fire2")){
+			Collider[] inRange = Physics.OverlapSphere(transform.position,grabRange,1<<LayerMask.NameToLayer("Items"));
 			//find the nearest item
 			float dist = 9999.0f;
 			Collider nearObject = null;
 			foreach(Collider collide in inRange){
-				float tmp = Vector3.Distance(collide.transform.position,gameObject.transform.position);
+				float tmp = Vector3.Distance(collide.transform.position,transform.position);
 				if (tmp < dist){
 					dist = tmp;
 					nearObject = collide;
@@ -132,7 +124,6 @@ public class Inventory : MonoBehaviour {
 				Item tmp = nearObject.GetComponent<Item>();
 				tmp.addToInventory(this);
 				items.addItem(tmp);
-				inRange.Remove(nearObject.collider);
 			}
 		}
 		
@@ -144,17 +135,25 @@ public class Inventory : MonoBehaviour {
 				setAsCurrent(current.identifier);
 		}
 		
-		if (Input.GetAxis("Mouse ScrollWheel") > 0){
+		if (Input.GetAxis("Mouse ScrollWheel") < 0){
 			selectNextItem();
-		}else if (Input.GetAxis("Mouse ScrollWheel") < 0){
+		}else if (Input.GetAxis("Mouse ScrollWheel") > 0){
 			selectPrevItem();
+		}
+		
+		int numHotKeys = items.Count;
+		numHotKeys = Mathf.Clamp(numHotKeys,0,9);
+		for (int i = 0; i < numHotKeys; i++){
+			if (Input.GetKeyUp((i+1).ToString())){
+				setAsCurrent(items[i].identifier);
+			}
 		}
 	}
 	
 	//returns true if an instance of the desired item type
 	//  was set as the current item
 	private bool setAsCurrent(string identifier){
-		if (identifier == ""){
+		if (identifier == ""){		//do this if we are setting it to no item at all
 			if (current != null)
 				current.deactivate();
 			current = null;
@@ -163,6 +162,8 @@ public class Inventory : MonoBehaviour {
 			Item[] list = GetComponentsInChildren<Item>(true);
 			foreach( Item curItem in list){
 				if (curItem.identifier == identifier){
+					if (current != null)
+						current.deactivate();
 					current = curItem;
 					current.activate();
 					return true;

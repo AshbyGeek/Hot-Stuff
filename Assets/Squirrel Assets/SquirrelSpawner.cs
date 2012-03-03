@@ -17,9 +17,7 @@ public class SquirrelSpawner : MonoBehaviour {
 	
 	}
 	
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void OnGUI(){
+		GUI.Label(new Rect(20,Screen.height - 70,100,50),numSquirrels.ToString() + " squirrels left");
 	}
 }

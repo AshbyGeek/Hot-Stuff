@@ -13,7 +13,7 @@ public class InGameGui : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.GetButtonUp("Camera")){
+		if (Input.GetButtonUp("Camera") && Time.timeScale > 0){
 			if (cameraMode){
 				charCam.enabled = false;
 				mapCam.enabled = true;
@@ -24,7 +24,7 @@ public class InGameGui : MonoBehaviour {
 				cameraMode = true;
 			}
 		}
-		if (Input.GetButtonUp("Menu")){
+		if (Input.GetButtonUp("Menu") && Time.timeScale > 0){
 			paused = !paused;
 			if (paused){
 				//this stops game time
