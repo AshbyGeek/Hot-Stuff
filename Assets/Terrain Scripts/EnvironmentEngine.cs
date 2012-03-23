@@ -40,10 +40,12 @@ public class EnvironmentEngine : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float fireScale = baseFireSpeed * Time.deltaTime;
+		int row;
+		int col;
 		
-		for (int row=0; row<mapgen.rows; row++)
+		for (row=0; row<mapgen.rows; row++)
 		{
-			for (int col=0; col<mapgen.cols; col++)
+			for (col=0; col<mapgen.cols; col++)
 			{
 				if (mapgen.tiles[row,col] != null){
 					int up=row-1;
@@ -70,9 +72,9 @@ public class EnvironmentEngine : MonoBehaviour {
 			}
 		}
 				
-		for (int row=0; row<mapgen.rows; row++)
+		for (row=0; row<mapgen.rows; row++)
 		{
-			for (int col=0; col<mapgen.cols; col++)
+			for (col=0; col<mapgen.cols; col++)
 			{
 				if (mapgen.tiles[row,col] != null)
 					mapgen.tiles[row,col].updateHeat();

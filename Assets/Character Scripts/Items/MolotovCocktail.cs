@@ -10,12 +10,15 @@ public class MolotovCocktail : Item {
 		//base.identifier = "Molotov Cocktail";
 	}
 	
-	public override void useItem() {
-		base.useItem();
-		Quaternion rot = Camera.mainCamera.transform.rotation;
-		Vector3 throwDir = rot * Vector3.forward;
-		rigidbody.AddForce(throwDir * throwSpeed,ForceMode.Impulse);
-		rigidbody.AddTorque(1,0,0,ForceMode.Impulse);
+	void Update(){
+		if (Input.GetButtonUp("Fire1")){
+			useItem();
+			Quaternion rot = Camera.mainCamera.transform.rotation;
+			Vector3 throwDir = rot * Vector3.forward;
+			rigidbody.AddForce(throwDir * throwSpeed,ForceMode.Impulse);
+			rigidbody.AddTorque(1,0,0,ForceMode.Impulse);
+			inv.removeCurItem();
+		}
 	}
 	
 	//use the collider to start a fire

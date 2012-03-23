@@ -7,6 +7,10 @@ public class Item : MonoBehaviour {
 	public Texture2D icon_unselected;
 	public string identifier;
 	public bool inInventory;
+	public bool oneTimeUse;
+	public bool reusable;
+	
+	protected Inventory inv;
 	
 	public void addToInventory(Inventory inv){
 		//since its going into an inventory, don't let it move
@@ -16,6 +20,7 @@ public class Item : MonoBehaviour {
 		transform.parent = inv.transform;
 		transform.localPosition = defPos;
 		transform.localRotation = Quaternion.identity;
+		this.inv = inv;
 	}
 	
 	public void activate(){

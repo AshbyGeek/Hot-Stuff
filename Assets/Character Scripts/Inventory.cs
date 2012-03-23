@@ -2,10 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Inventory : MonoBehaviour {
-	//this keeps track of items that are close enough to pick up
-	private List<Collider> inRange = new List<Collider>();
-	
+public class Inventory : MonoBehaviour {	
 	//how close does an object need to be before it can be grabbed?
 	public float grabRange = 10.0f;
 	
@@ -110,29 +107,21 @@ public class Inventory : MonoBehaviour {
 			Collider[] inRange = Physics.OverlapSphere(transform.position,grabRange,1<<LayerMask.NameToLayer("Items"));
 			//find the nearest item
 			float dist = 9999.0f;
-			Collider nearObject = null;
+			Item nearObject = null;
 			foreach(Collider collide in inRange){
 				float tmp = Vector3.Distance(collide.transform.position,transform.position);
-				if (tmp < dist){
+				Item curItem = collide.GetComponent<Item>();
+				if (tmp < dist && curItem != null && !curItem.reusable){
 					dist = tmp;
-					nearObject = collide;
+					nearObject = curItem;
 				}
 			}
 			
 			//add it to the inventory
 			if (nearObject != null){
-				Item tmp = nearObject.GetComponent<Item>();
-				tmp.addToInventory(this);
-				items.addItem(tmp);
+				nearObject.addToInventory(this);
+				items.addItem(nearObject);
 			}
-		}
-		
-		if (Input.GetButtonUp("Fire1") && current != null){
-			current.useItem();
-			if (items.removeItem(current))
-				current = null;
-			else
-				setAsCurrent(current.identifier);
 		}
 		
 		if (Input.GetAxis("Mouse ScrollWheel") < 0){
@@ -150,6 +139,13 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 	
+	public void removeCurItem(){
+		if (items.removeItem(current))
+			current = null;
+		else
+			setAsCurrent(current.identifier);
+	}
+	
 	//returns true if an instance of the desired item type
 	//  was set as the current item
 	private bool setAsCurrent(string identifier){
@@ -162,8 +158,6 @@ public class Inventory : MonoBehaviour {
 			Item[] list = GetComponentsInChildren<Item>(true);
 			foreach( Item curItem in list){
 				if (curItem.identifier == identifier){
-					if (current != null)
-						current.deactivate();
 					current = curItem;
 					current.activate();
 					return true;
