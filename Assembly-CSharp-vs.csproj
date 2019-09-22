@@ -60,6 +60,7 @@
      <Compile Include="Assets\Squirrel Assets\squirrelAI.cs" />
      <Compile Include="Assets\Squirrel Assets\squirrelAI_ghost.cs" />
      <Compile Include="Assets\Terrain Scripts\EnvironmentEngine.cs" />
+     <Compile Include="Assets\Terrain Scripts\MakeMiniMapBig.cs" />
      <Compile Include="Assets\Terrain Scripts\PrettyTerrain.cs" />
      <Compile Include="Assets\Terrain Scripts\TerrainGen.cs" />
      <Compile Include="Assets\Terrain Scripts\Tile_GameObject.cs" />

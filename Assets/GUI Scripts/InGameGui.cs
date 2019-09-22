@@ -6,7 +6,7 @@ public class InGameGui : MonoBehaviour {
 	private bool paused = false;
 	
 	void Start(){
-		Screen.showCursor = false;
+		Cursor.visible = false;
 	}
 
 	void Update(){
@@ -15,10 +15,10 @@ public class InGameGui : MonoBehaviour {
 			if (paused){
 				//this stops game time
 				Time.timeScale = 0;
-				Screen.showCursor = true;
+				Cursor.visible = true;
 			}else{
 				Time.timeScale = 1;
-				Screen.showCursor = false;
+				Cursor.visible = false;
 			}
 		}
 	}
@@ -29,7 +29,7 @@ public class InGameGui : MonoBehaviour {
 			if (done){
 				paused = false;
 				Time.timeScale = 1;
-				Screen.showCursor = false;
+				Cursor.visible = false;
 			}
 		}
 	}

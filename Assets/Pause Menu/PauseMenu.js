@@ -1,7 +1,7 @@
 //*******************************************************************************
 //*																							*
 //*							Written by Grady Featherstone								*
-//										© Copyright 2011										*
+//										Â© Copyright 2011										*
 //*******************************************************************************
 var mainMenuSceneName : String;
 var pauseMenuFont : Font;
@@ -11,7 +11,7 @@ function Start(){
 	pauseEnabled = false;
 	Time.timeScale = 1;
 	AudioListener.volume = 1;
-	Screen.showCursor = false;
+	Cursor.visible = false;
 }
 
 function Update(){
@@ -25,7 +25,7 @@ function Update(){
 			pauseEnabled = false;
 			Time.timeScale = 1;
 			AudioListener.volume = 1;
-			Screen.showCursor = false;			
+			Cursor.visible = false;			
 		}
 		
 		//else if game isn't paused, then pause it
@@ -33,7 +33,7 @@ function Update(){
 			pauseEnabled = true;
 			AudioListener.volume = 0;
 			Time.timeScale = 0;
-			Screen.showCursor = true;
+			Cursor.visible = true;
 		}
 	}
 }

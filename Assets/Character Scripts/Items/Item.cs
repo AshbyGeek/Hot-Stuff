@@ -29,7 +29,7 @@ public class Item : MonoBehaviour {
 	
 	public void deactivate(){
 		gameObject.SetActiveRecursively(false);
-		rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		enableColliders(false);
 	}
 	
@@ -37,7 +37,7 @@ public class Item : MonoBehaviour {
 		//Let this object wander about the map again
 		enableColliders(true);
 		transform.parent = null;
-		rigidbody.constraints = RigidbodyConstraints.None;
+		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		inInventory = false;
 	}
 	

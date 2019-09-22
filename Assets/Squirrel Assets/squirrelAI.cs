@@ -29,9 +29,9 @@ public class squirrelAI : MonoBehaviour {
 		if (closest != null){
 			//rigidbody.velocity = Vector3.forward * moveSpeed;
 			targetDir.Normalize();
-			rigidbody.transform.LookAt(closest.transform, -Vector3.up);
+			GetComponent<Rigidbody>().transform.LookAt(closest.transform, -Vector3.up);
 			//rigidbody.transform.position += targetDir * moveSpeed;
-			rigidbody.velocity += targetDir*moveSpeed;
+			GetComponent<Rigidbody>().velocity += targetDir*moveSpeed;
 		}
 	}
 }
