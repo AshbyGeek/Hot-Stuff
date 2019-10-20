@@ -26,10 +26,13 @@ Material:
     m_Floats:
     - _AO: 3.301887
     - _BaseLight: 0.06603774
+    - _SquashAmount: 1
     m_Colors:
     - _Color: {r: 0.9687648, g: 0.9687648, b: 0.9687648, a: 1}
     - _MainTex_ST: {r: 1, g: 1, b: 0, a: 0}
     - _Scale: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
