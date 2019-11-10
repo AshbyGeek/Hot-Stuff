@@ -14,14 +14,17 @@ public class Settings_GUI : MonoBehaviour
         Quality
     };
 
-    public static ICommand ChangeExtendedMenuToResolution = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.Res);
-    public static ICommand ChangeExtendedMenuToQuality = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.Quality);
-    public static ICommand CloseExtendedMenu = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.None);
-    public static ICommand FullscreenOn = new ActionCommand(() => Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen);
-    public static ICommand FullscreenOff = new ActionCommand(() => Screen.fullScreenMode = FullScreenMode.Windowed);
+    public static ICommand ChangeExtendedMenuToResolutionCmd = new ActionCommand("Open Resolution Sub Menu", () => CurrentExtendedMenu = ExtendedMenu.Res);
+    public static ICommand ChangeExtendedMenuToQualityCmd = new ActionCommand("Open Quality Sub Menu", () => CurrentExtendedMenu = ExtendedMenu.Quality);
+    public static ICommand CloseExtendedMenuCmd = new ActionCommand("Close Sub Menu", () => CurrentExtendedMenu = ExtendedMenu.None);
+    public static ICommand FullscreenOnCmd = new ActionCommand("Enter Fullscreen", () => Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen);
+    public static ICommand FullscreenOffCmd = new ActionCommand("Exit Fullscreen", () => Screen.fullScreenMode = FullScreenMode.Windowed);
+    public static ICommand MenuClosedCmd = NullCommand.Instance;
 
-    public static List<(string name, ICommand cmd)> ChangeQualityModeCommands = QualitySettings.names.Select((x, i) => (x, new ActionCommand(() => QualitySettings.SetQualityLevel(i)) as ICommand)).ToList();
-    public static List<(string name, ICommand cmd)> ChangeResolutionCommands = Screen.resolutions.Select(x => ($"{x.width}x{x.height}@{x.refreshRate}", new ActionCommand(() => Screen.SetResolution(x.width, x.height, Screen.fullScreen, x.refreshRate)) as ICommand)).ToList();
+    public static List<(string name, ICommand cmd)> ChangeQualityModeCommands = QualitySettings.names.Select((x, i) => (x, new ActionCommand("Change to quality: " + x, () => QualitySettings.SetQualityLevel(i)) as ICommand)).ToList();
+    public static List<(string name, ICommand cmd)> ChangeResolutionCommands = Screen.resolutions.Select(x => (GetName(x), new ActionCommand("Change Resolution to: " + GetName(x), () => Screen.SetResolution(x.width, x.height, Screen.fullScreen, x.refreshRate)) as ICommand)).ToList();
+
+    private static string GetName(Resolution res) => $"{res.width}x{res.height}@{res.refreshRate}";
 
     private static ExtendedMenu CurrentExtendedMenu = ExtendedMenu.None;
     private static int curResIndx = Array.IndexOf(Screen.resolutions, Screen.currentResolution);
@@ -31,12 +34,7 @@ public class Settings_GUI : MonoBehaviour
     {
         int width = 100;
         int height = 170;
-        int left;
-        if (CurrentExtendedMenu != ExtendedMenu.None)
-            left = (Screen.width - width * 2 - 10) / 2;
-        else
-            left = (Screen.width - width) / 2;
-
+        int left = (Screen.width - width) / 2;
         int top = (Screen.height - height) / 2;
 
 
@@ -47,39 +45,39 @@ public class Settings_GUI : MonoBehaviour
         if (GUILayout.Button("Quality"))
         {
             if (CurrentExtendedMenu == Settings_GUI.ExtendedMenu.Quality)
-                CloseExtendedMenu.Execute();
+                CloseExtendedMenuCmd.Execute();
             else
-                ChangeExtendedMenuToQuality.Execute();
+                ChangeExtendedMenuToQualityCmd.Execute();
         }
 
         if (GUILayout.Button("Resolution"))
         {
             if (CurrentExtendedMenu == ExtendedMenu.Res)
-                CloseExtendedMenu.Execute();
+                CloseExtendedMenuCmd.Execute();
             else
-                ChangeExtendedMenuToResolution.Execute();
+                ChangeExtendedMenuToResolutionCmd.Execute();
         }
 
         if (GUILayout.Toggle(Screen.fullScreen, "Fullscreen"))
         {
-            FullscreenOn.Execute();
+            FullscreenOnCmd.Execute();
         }
         else
         {
-            FullscreenOff.Execute();
+            FullscreenOffCmd.Execute();
         }
 
         GUILayout.Space(10);
         if (GUILayout.Button("Back"))
         {
-            return true;
+            MenuClosedCmd.Execute();
         }
 
         GUILayout.EndArea();
 
         if (CurrentExtendedMenu == ExtendedMenu.Res)
         {
-            GUILayout.BeginArea(new Rect(left + width + 10, top + 20, width, height - 20));
+            GUILayout.BeginArea(new Rect(left + width + 10, top + 20, width + 15, height - 20));
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
             int newResIndx = GUILayout.SelectionGrid(curResIndx, ChangeResolutionCommands.Select(x => x.name).ToArray(), 1);
@@ -87,7 +85,7 @@ public class Settings_GUI : MonoBehaviour
             {
                 curResIndx = newResIndx;
                 ChangeResolutionCommands[newResIndx].cmd.Execute();
-                CloseExtendedMenu.Execute();
+                CloseExtendedMenuCmd.Execute();
             }
 
             GUILayout.EndScrollView();
@@ -102,7 +100,9 @@ public class Settings_GUI : MonoBehaviour
             int curModeIdx = QualitySettings.GetQualityLevel();
             int newModeIdx = GUILayout.SelectionGrid(curModeIdx, ChangeQualityModeCommands.Select(x => x.name).ToArray(), 1);
             if (newModeIdx != curModeIdx)
+            {
                 ChangeQualityModeCommands[newModeIdx].cmd.Execute();
+            }
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();

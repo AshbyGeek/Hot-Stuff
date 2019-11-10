@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 [RequireComponent (typeof (Rigidbody))]
 public class CharacterInteractions: MonoBehaviour {
@@ -26,6 +27,6 @@ public class CharacterInteractions: MonoBehaviour {
 	}
 	
 	public void killCharacter(){
-		Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
 	}
 }

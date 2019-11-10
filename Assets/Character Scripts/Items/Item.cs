@@ -24,11 +24,11 @@ public class Item : MonoBehaviour {
 	}
 	
 	public void activate(){
-		gameObject.SetActiveRecursively(true);
+		gameObject.SetActive(true);
 	}
 	
 	public void deactivate(){
-		gameObject.SetActiveRecursively(false);
+		gameObject.SetActive(false);
 		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		enableColliders(false);
 	}

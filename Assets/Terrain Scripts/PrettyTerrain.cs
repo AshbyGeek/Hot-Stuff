@@ -112,7 +112,7 @@ public class PrettyTerrain : MonoBehaviour {
 					tmpFireObj.transform.parent = tileObj.transform;
 					tmpFireObj.transform.localPosition = Vector3.zero;
 					tmpFireObj.name = "FireObj";
-					tmpFireObj.SetActiveRecursively(false);
+					tmpFireObj.SetActive(false);
 					terrain.tiles[i,j].fireObj = tmpFireObj;
 				}
 			}

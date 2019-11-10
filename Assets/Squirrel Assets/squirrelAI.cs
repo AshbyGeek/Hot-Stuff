@@ -14,7 +14,7 @@ public class squirrelAI : MonoBehaviour {
 	
 	void FixedUpdate () {
 		GameObject closest = null;
-		float closestDist = 99999999999999999999999.0f;
+		float closestDist = float.MaxValue;
 		
 		Vector3 targetDir = Vector3.up;
 		foreach(GameObject tmp in characters){
