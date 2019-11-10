@@ -1,17 +1,29 @@
 using UnityEngine;
+using Commands;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
+public enum GameMenu
+{
+    Main,
+    Settings
+}
 
 public class Loader_GUI : MonoBehaviour {
-	private enum Menu{
-		Main,
-		Settings
-	}
 	
-	private Menu curMenu = Menu.Main;
+	public static GameMenu CurrentGameMenu = GameMenu.Main;
+
+    public ICommand QuitCommand = new ActionCommand(() => Application.Quit());
+
+    public ICommand LoadGame = new ActionCommand(() => SceneManager.LoadScene("Game"));
+
+    public ICommand ChangeToSettingsMenu = new ActionCommand(() => CurrentGameMenu = GameMenu.Settings);
+
+    public ICommand ChangeToMainMenu = new ActionCommand(() => CurrentGameMenu = GameMenu.Main);
 	
 	void OnGUI () {
 		Cursor.visible = true;
-		if (curMenu == Loader_GUI.Menu.Main){
+		if (CurrentGameMenu == GameMenu.Main){
 			// Make a background box
 			int width = 100;
 			int height = 120;
@@ -23,23 +35,23 @@ public class Loader_GUI : MonoBehaviour {
 		
 			// Make the first button. If it is pressed, Application.Loadlevel (1) will be executed
 			if (GUI.Button (new Rect (10,30,80,20), "Load Level")) {
-				Application.LoadLevel (1);
+                LoadGame.Execute();
 			}
 			
 			if (GUI.Button(new Rect(10,60,80,20), "Settings")){
-				curMenu = Loader_GUI.Menu.Settings;
+                ChangeToSettingsMenu.Execute();
 			}
 		
 			// Make the second button.
 			if (GUI.Button(new Rect (10,90,80,20), "exit")) {
-				Application.Quit();
+                QuitCommand.Execute();
 			}
 			
 			GUI.EndGroup();
-		}else if (curMenu == Menu.Settings){
+		}else if (CurrentGameMenu == GameMenu.Settings){
 			bool done = Settings_GUI.settingsMenu();
-			if (done)
-				curMenu = Loader_GUI.Menu.Main;
+            if (done)
+                ChangeToMainMenu.Execute();
 		}
 	}
 }

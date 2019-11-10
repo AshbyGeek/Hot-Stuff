@@ -1,104 +1,112 @@
 using UnityEngine;
+using Commands;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
-public class Settings_GUI : MonoBehaviour {
-	private enum ExtendedMenu{
-		None,
-		Res,
-		Quality
-	};
-	
-	private static ExtendedMenu curMenu = ExtendedMenu.None;
-	private static int curResIndx = 0;
-	private static Vector2 scrollPosition;		
-	private static bool fullscreen;
-	
-	public static bool settingsMenu() {
-			int width = 100;
-			int height = 170;
-			int left;
-			if (curMenu != ExtendedMenu.None)
-				left = (Screen.width - width*2 - 10)/2;
-			else
-				left = (Screen.width - width)/2;
-			
-			int top = (Screen.height - height)/2;
-			
-			
-			GUILayout.BeginArea(new Rect(left,top,width,height),GUI.skin.GetStyle("box"));		
-				GUILayout.Box("Settings");
-				GUILayout.Space(10);
-			
-				if (GUILayout.Button("Quality")){
-					if (curMenu == Settings_GUI.ExtendedMenu.Quality)
-						curMenu = Settings_GUI.ExtendedMenu.None;
-					else
-						curMenu = Settings_GUI.ExtendedMenu.Quality;
-				}
-			
-				if (GUILayout.Button("Resolution")){
-					if (curMenu == ExtendedMenu.Res)
-						curMenu = ExtendedMenu.None;
-					else
-						curMenu = ExtendedMenu.Res;
-				}
-				fullscreen = Screen.fullScreen;
-				fullscreen = GUILayout.Toggle(fullscreen,"Fullscreen");
-				if (fullscreen != Screen.fullScreen)
-					Screen.fullScreen = fullscreen;
-			
-			
-				GUILayout.Space(10);
-				if (GUILayout.Button("Back")) {
-					return true;
-				}
-			
-			GUILayout.EndArea();
-		
-		if (curMenu == ExtendedMenu.Res){
-			GUILayout.BeginArea(new	Rect(left + width + 10,top+20,width,height-20));
-			scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-				
-				Resolution[] resolutions = Screen.resolutions;
-				GUIContent[] list = new GUIContent[resolutions.Length];
-				for(int i = 0; i < resolutions.Length; i++){
-					if (resolutions[i].Equals(Screen.currentResolution))
-						curResIndx = i;
-					list[i] = new GUIContent(resolutions[i].width.ToString() + "x" +
-				                         resolutions[i].height.ToString());
-				}
-				int prev = curResIndx;
-				curResIndx = GUILayout.SelectionGrid(curResIndx,list,1);
-				if (curResIndx != prev){
-					curMenu = ExtendedMenu.None;
-					Resolution res = resolutions[curResIndx];
-					Screen.SetResolution(res.width,res.height,fullscreen);
-				}
-			
-			GUILayout.EndScrollView();
-			GUILayout.EndArea();
-		}
-		
-		if (curMenu == Settings_GUI.ExtendedMenu.Quality){
-			GUILayout.BeginArea(new	Rect(left + width + 10,top+20,width,height-20));
-			scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-			
-				GUIContent[] list = {
-					new GUIContent("Fastest"),
-					new GUIContent("Fast"),
-					new GUIContent("Simple"),
-					new GUIContent("Good"),
-					new GUIContent("Beautiful"),
-					new GUIContent("Fantastic")};
-				int curQuality = (int) QualitySettings.currentLevel;
-				int tmp = GUILayout.SelectionGrid(curQuality,list,1);
-				
-				if (tmp != curQuality)
-					QualitySettings.currentLevel = (QualityLevel) tmp;
-			
-			GUILayout.EndScrollView();
-			GUILayout.EndArea();
-		}
-		return false;
-	}
+public class Settings_GUI : MonoBehaviour
+{
+    private enum ExtendedMenu
+    {
+        None,
+        Res,
+        Quality
+    };
+
+    public static ICommand ChangeExtendedMenuToResolution = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.Res);
+    public static ICommand ChangeExtendedMenuToQuality = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.Quality);
+    public static ICommand CloseExtendedMenu = new ActionCommand(() => CurrentExtendedMenu = ExtendedMenu.None);
+    public static ICommand FullscreenOn = new ActionCommand(() => Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen);
+    public static ICommand FullscreenOff = new ActionCommand(() => Screen.fullScreenMode = FullScreenMode.Windowed);
+
+    public static List<(string name, ICommand cmd)> ChangeQualityModeCommands = QualitySettings.names.Select((x, i) => (x, new ActionCommand(() => QualitySettings.SetQualityLevel(i)) as ICommand)).ToList();
+    public static List<(string name, ICommand cmd)> ChangeResolutionCommands = Screen.resolutions.Select(x => ($"{x.width}x{x.height}@{x.refreshRate}", new ActionCommand(() => Screen.SetResolution(x.width, x.height, Screen.fullScreen, x.refreshRate)) as ICommand)).ToList();
+
+    private static ExtendedMenu CurrentExtendedMenu = ExtendedMenu.None;
+    private static int curResIndx = Array.IndexOf(Screen.resolutions, Screen.currentResolution);
+    private static Vector2 scrollPosition;
+
+    public static bool settingsMenu()
+    {
+        int width = 100;
+        int height = 170;
+        int left;
+        if (CurrentExtendedMenu != ExtendedMenu.None)
+            left = (Screen.width - width * 2 - 10) / 2;
+        else
+            left = (Screen.width - width) / 2;
+
+        int top = (Screen.height - height) / 2;
+
+
+        GUILayout.BeginArea(new Rect(left, top, width, height), GUI.skin.GetStyle("box"));
+        GUILayout.Box("Settings");
+        GUILayout.Space(10);
+
+        if (GUILayout.Button("Quality"))
+        {
+            if (CurrentExtendedMenu == Settings_GUI.ExtendedMenu.Quality)
+                CloseExtendedMenu.Execute();
+            else
+                ChangeExtendedMenuToQuality.Execute();
+        }
+
+        if (GUILayout.Button("Resolution"))
+        {
+            if (CurrentExtendedMenu == ExtendedMenu.Res)
+                CloseExtendedMenu.Execute();
+            else
+                ChangeExtendedMenuToResolution.Execute();
+        }
+
+        if (GUILayout.Toggle(Screen.fullScreen, "Fullscreen"))
+        {
+            FullscreenOn.Execute();
+        }
+        else
+        {
+            FullscreenOff.Execute();
+        }
+
+        GUILayout.Space(10);
+        if (GUILayout.Button("Back"))
+        {
+            return true;
+        }
+
+        GUILayout.EndArea();
+
+        if (CurrentExtendedMenu == ExtendedMenu.Res)
+        {
+            GUILayout.BeginArea(new Rect(left + width + 10, top + 20, width, height - 20));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
+            int newResIndx = GUILayout.SelectionGrid(curResIndx, ChangeResolutionCommands.Select(x => x.name).ToArray(), 1);
+            if (newResIndx != curResIndx)
+            {
+                curResIndx = newResIndx;
+                ChangeResolutionCommands[newResIndx].cmd.Execute();
+                CloseExtendedMenu.Execute();
+            }
+
+            GUILayout.EndScrollView();
+            GUILayout.EndArea();
+        }
+
+        if (CurrentExtendedMenu == Settings_GUI.ExtendedMenu.Quality)
+        {
+            GUILayout.BeginArea(new Rect(left + width + 10, top + 20, width, height - 20));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
+            int curModeIdx = QualitySettings.GetQualityLevel();
+            int newModeIdx = GUILayout.SelectionGrid(curModeIdx, ChangeQualityModeCommands.Select(x => x.name).ToArray(), 1);
+            if (newModeIdx != curModeIdx)
+                ChangeQualityModeCommands[newModeIdx].cmd.Execute();
+
+            GUILayout.EndScrollView();
+            GUILayout.EndArea();
+        }
+        return false;
+    }
 }
