@@ -8,7 +8,6 @@ public class WaterTile : TerrainTile {
 	
 	public new void init(float height){
 		base.init(height);
-		this.type = TerrainTile.TileType.water;
 		this.isFlamable = false;
 		
 		//this tile cannot catch on fire

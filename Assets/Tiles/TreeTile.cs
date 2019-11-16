@@ -1,21 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
-public class BrushTile : TerrainTile {
+public class TreeTile : TerrainTile{
 	public new void init(float height){
 		base.init(height);
-		this.type = TerrainTile.TileType.brush;
-		
-		this.heatThresh = 2.0f;
+		this.heatThresh = 1.0f;
 	}
-	//here we will do brush specific stuff
-	float brushFireBoost=1.5f;
+	
+	//here we will do tree specific stuff
+	float treeFireBoost=1f;
 	
 	public override void accumulateHeat(float more)
 	{
-		if (heatIndex < maxHeat){
-			newheat += more*brushFireBoost;
-		}
+		if (heatThresh < maxHeat)
+			newheat += more*treeFireBoost;
 	}
 	
 	public override void updateHeat()
@@ -23,5 +21,6 @@ public class BrushTile : TerrainTile {
 		heatIndex += newheat;
 		newheat=0;
 		updateFlames();
-	}	
+	}
+	
 }

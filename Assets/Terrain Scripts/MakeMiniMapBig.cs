@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Camera))]
 public class MakeMiniMapBig : MonoBehaviour {
 	
 	Rect smallSize;
@@ -14,10 +15,11 @@ public class MakeMiniMapBig : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyUp(KeyCode.F1)){
-			if (GetComponent<Camera>().rect == smallSize){
-				GetComponent<Camera>().rect = largeSize;
+			Camera camera = GetComponent<Camera>();
+			if (camera.rect == smallSize){
+				camera.rect = largeSize;
 			}else{
-				GetComponent<Camera>().rect = smallSize;
+				camera.rect = smallSize;
 			}
 		}
 	}
