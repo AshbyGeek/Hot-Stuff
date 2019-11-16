@@ -30,7 +30,7 @@ public class Settings_GUI : MonoBehaviour
     private static int curResIndx = Array.IndexOf(Screen.resolutions, Screen.currentResolution);
     private static Vector2 scrollPosition;
 
-    public static bool settingsMenu()
+    public static void settingsMenu()
     {
         int width = 100;
         int height = 170;
@@ -107,6 +107,5 @@ public class Settings_GUI : MonoBehaviour
             GUILayout.EndScrollView();
             GUILayout.EndArea();
         }
-        return false;
     }
 }

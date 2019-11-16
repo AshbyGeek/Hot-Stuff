@@ -27,6 +27,7 @@ public class Loader_GUI : MonoBehaviour
         Settings_GUI.MenuClosedCmd = ChangeToMainMenuCmd;
 
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         if (CurrentGameMenu == GameMenu.Main)
         {
             // Make a background box
@@ -59,10 +60,8 @@ public class Loader_GUI : MonoBehaviour
         }
         else if (CurrentGameMenu == GameMenu.Settings)
         {
-            if (Settings_GUI.settingsMenu())
-            {
-                ChangeToMainMenuCmd.Execute();
-            }
+            Settings_GUI.MenuClosedCmd = ChangeToMainMenuCmd;
+            Settings_GUI.settingsMenu();
         }
     }
 }

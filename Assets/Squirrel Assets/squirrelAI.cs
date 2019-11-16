@@ -9,7 +9,7 @@ public class squirrelAI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		characters = GameObject.FindGameObjectsWithTag("Player");
-		Debug.Log("number of players: " + characters.GetLength(0));
+		//Debug.Log("number of players: " + characters.GetLength(0));
 	}
 	
 	void FixedUpdate () {

@@ -26,7 +26,7 @@ public class CharacterHealth : MonoBehaviour {
 		}
 		
 		//check if the character has died
-		if (health < 0)
+		if (health <= 0)
 		{
 			tmp.killCharacter();
 		}

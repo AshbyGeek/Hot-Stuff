@@ -12,7 +12,7 @@ public class axe : Item {
 	
 	void Update(){
 		if (Input.GetButtonUp("Fire1")){
-			base.useItem();
+			base.UseItem();
 			Quaternion rot = Camera.main.transform.rotation;
 			Vector3 throwDir = rot * Vector3.forward;
 			GetComponent<Rigidbody>().AddForce(throwDir * throwSpeed,ForceMode.Impulse);

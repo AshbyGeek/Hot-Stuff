@@ -15,18 +15,6 @@ public class InGameGui : MonoBehaviour
         ReturnToGameCmd = new ActionCommand("Exit menu and return to game", Resume);
     }
 
-    private static void Pause()
-    {
-        Time.timeScale = 0;
-        Cursor.visible = true;
-    }
-
-    private static void Resume()
-    {
-        Time.timeScale = 1;
-        Cursor.visible = false;
-    }
-
     void Start()
     {
         Cursor.visible = false;
@@ -53,5 +41,20 @@ public class InGameGui : MonoBehaviour
             Settings_GUI.MenuClosedCmd = ReturnToGameCmd;
             Settings_GUI.settingsMenu();
         }
+    }
+
+
+
+
+    private void Pause()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+    }
+
+    private void Resume()
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
     }
 }

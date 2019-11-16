@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Item : MonoBehaviour {
+[DisallowMultipleComponent]
+public abstract class Item : MonoBehaviour {
 	protected Vector3 defPos;
 	public Texture2D icon_selected;
 	public Texture2D icon_unselected;
@@ -10,35 +11,23 @@ public class Item : MonoBehaviour {
 	public bool oneTimeUse;
 	public bool reusable;
 	
-	protected Inventory inv;
-	
-	public void addToInventory(Inventory inv){
-		//since its going into an inventory, don't let it move
-		//  and move it to its position on the character
-		inInventory = true;
-		deactivate();
-		transform.parent = inv.transform;
-		transform.localPosition = defPos;
-		transform.localRotation = Quaternion.identity;
-		this.inv = inv;
-	}
-	
-	public void activate(){
+	public void Activate(){
+		enableColliders(true);
+		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		gameObject.SetActive(true);
 	}
 	
-	public void deactivate(){
+	public void Deactivate(){
 		gameObject.SetActive(false);
 		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		enableColliders(false);
-	}
-	
-	public virtual void useItem(){
+        transform.localPosition = defPos;
+        transform.localRotation = Quaternion.identity;
+    }
+
+    public virtual void UseItem(){
 		//Let this object wander about the map again
-		enableColliders(true);
-		transform.parent = null;
-		GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-		inInventory = false;
+		Activate();
 	}
 	
 	private void enableColliders(bool enabled){

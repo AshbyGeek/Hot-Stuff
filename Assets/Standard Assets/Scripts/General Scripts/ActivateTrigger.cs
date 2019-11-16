@@ -36,11 +36,11 @@ public class ActivateTrigger : MonoBehaviour {
 				case Mode.Replace:
 					if (source != null) {
 						Object.Instantiate (source, targetGameObject.transform.position, targetGameObject.transform.rotation);
-						DestroyObject (targetGameObject);
+						Destroy(targetGameObject);
 					}
 					break;
 				case Mode.Activate:
-					targetGameObject.active = true;
+					targetGameObject.SetActive(true);
 					break;
 				case Mode.Enable:
 					if (targetBehaviour != null)
@@ -50,7 +50,7 @@ public class ActivateTrigger : MonoBehaviour {
 					targetGameObject.GetComponent<Animation>().Play ();
 					break;	
 				case Mode.Deactivate:
-					targetGameObject.active = false;
+					targetGameObject.SetActive(false);
 					break;
 			}
 		}
