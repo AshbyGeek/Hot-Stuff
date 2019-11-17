@@ -32,10 +32,8 @@ public class EnvironmentEngine : MonoBehaviour {
 	public void addFire(TerrainTile tile){
 		addFire(tile,0.1f);
 	}
-	
+
 	public void addFire(TerrainTile tile, float amount){
-		if (tile.heatThresh >= 999999.0f)
-			return;
 		tile.heatIndex += amount;
 	}
 	
@@ -78,8 +76,15 @@ public class EnvironmentEngine : MonoBehaviour {
 		{
 			for (col=0; col<mapgen.cols; col++)
 			{
-				if (mapgen.tiles[row,col] != null)
-					mapgen.tiles[row,col].updateHeat();
+				TerrainTile curTile = mapgen.tiles[row,col];
+				if (curTile != null)
+				{
+					if (curTile.heatIndex > curTile.maxHeat)
+					{
+						curTile.heatIndex = curTile.maxHeat;
+					}
+					curTile.updateHeat();
+				}
 			}
 		}
 		

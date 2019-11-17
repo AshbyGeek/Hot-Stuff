@@ -71,8 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b587975565c09f945848a95d6bdc42cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
+  maxHealth: 30
+  damageRate: 60
   deathSound: {fileID: 8200002}
 --- !u!136 &13600000
 CapsuleCollider:

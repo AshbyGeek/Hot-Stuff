@@ -137,23 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &22
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 45}
-  - component: {fileID: 114}
-  m_Layer: 0
-  m_Name: Environment
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &23
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,8 +150,10 @@ GameObject:
   - component: {fileID: 72}
   - component: {fileID: 62}
   - component: {fileID: 79}
+  - component: {fileID: 31}
+  - component: {fileID: 26}
   m_Layer: 8
-  m_Name: Pretty Terrain
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,23 +182,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &26
-GameObject:
+--- !u!114 &26
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 49}
-  - component: {fileID: 118}
-  m_Layer: 0
-  m_Name: Map Generator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_GameObject: {fileID: 23}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55864080a695943498b10bb3700b7c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapgen: {fileID: 31}
+  baseFireSpeed: 0.1
 --- !u!1 &27
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,11 +213,36 @@ GameObject:
   - component: {fileID: 99}
   m_Layer: 0
   m_Name: Map Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &31
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba599efdb4c670d429261eaddd260267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_val: 100
+  mtn_thresh: 75
+  tree_thresh: 46
+  brush_thresh: 25
+  plain_thresh: 17
+  water_thresh: 7
+  mtn_chain: 4
+  water_chain: 2
+  cols: 40
+  rows: 40
+  Mtn_Spawns: 3
+  Water_Spawns: 3
+  Tree_Spawns: 3
 --- !u!4 &34
 Transform:
   m_ObjectHideFlags: 0
@@ -248,21 +255,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &45
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &46
 Transform:
@@ -277,7 +270,7 @@ Transform:
   m_Children:
   - {fileID: 47}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &47 stripped
 Transform:
@@ -299,20 +292,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &49
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &50
 Transform:
   m_ObjectHideFlags: 0
@@ -325,7 +304,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &54
 Camera:
@@ -540,20 +519,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squirrelModel: {fileID: 100000, guid: 213dcf58e89843c48a83a8c0959e1440, type: 3}
   numSquirrels: 100
---- !u!114 &114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55864080a695943498b10bb3700b7c3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapgen: {fileID: 118}
-  baseFireSpeed: 0.05
 --- !u!114 &115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,7 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b21bfd60c0193b418d3bf32b244a5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrain: {fileID: 118}
+  terrain: {fileID: 31}
   water_obj: {fileID: 24}
   tree_obj: {fileID: -927199367670048503, guid: 8c7d35afbd119bca11002b7b44295342,
     type: 3}
@@ -588,38 +553,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d797072ff8837184194e53ef816dd452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 49}
+  target: {fileID: 0}
   distance: 300
   xSpeed: 250
   ySpeed: 120
   zSpeed: 250
   yMinLimit: -90
   yMaxLimit: 90
---- !u!114 &118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba599efdb4c670d429261eaddd260267, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_val: 100
-  mtn_thresh: 75
-  tree_thresh: 46
-  brush_thresh: 25
-  plain_thresh: 17
-  water_thresh: 7
-  mtn_chain: 4
-  water_chain: 2
-  cols: 40
-  rows: 40
-  Mtn_Spawns: 3
-  Water_Spawns: 3
-  Tree_Spawns: 3
 --- !u!1001 &124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -630,14 +570,6 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3300000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300006, guid: ce8d79c79d11b8f9d00076e98d76c639, type: 3}
-    - target: {fileID: 2300000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
       propertyPath: m_LocalPosition.x
@@ -662,6 +594,14 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.69588464
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300006, guid: ce8d79c79d11b8f9d00076e98d76c639, type: 3}
+    - target: {fileID: 2300000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 3}
@@ -727,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 625630430, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: reusable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2112704426, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: damageRate
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}

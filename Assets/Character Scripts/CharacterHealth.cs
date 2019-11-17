@@ -3,8 +3,11 @@ using System.Collections;
 
 public class CharacterHealth : MonoBehaviour {
 	
-	public float health;
-	public float maxHealth;
+	private float health;
+
+	public float maxHealth = 200;
+
+	public float damageRate = 30f;
 	
     public Vector2 bar_pos = new Vector2(20,40);
     public Vector2 bar_size = new Vector2(60,20);
@@ -21,7 +24,7 @@ public class CharacterHealth : MonoBehaviour {
 		
 		if (tmp.curTile != null){
 			if (tmp.curTile.isOnFire()){
-				health -= tmp.curTile.heatIndex/10.0f;
+				health -= damageRate * Time.deltaTime;
 			}
 		}
 		
