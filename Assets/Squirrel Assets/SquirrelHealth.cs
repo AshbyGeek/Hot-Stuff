@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class SquirrelHealth : MonoBehaviour
 {
+    public ObservableEvent SquirrelDied = new ObservableEvent();
+
     private float health = 100;
     public float maxHealth = 100;
 
@@ -13,6 +16,7 @@ public class SquirrelHealth : MonoBehaviour
     private EnvironmentEngine engine;
     private PrettyTerrain terrain;
     private TerrainTile curTile;
+
 
     // Use this for initialization
     void Start()
@@ -51,8 +55,12 @@ public class SquirrelHealth : MonoBehaviour
     void killSquirrel()
     {
         Destroy(this.gameObject);
-        GameObject tmp = GameObject.Find("SquirrelLauncher");
-        tmp.GetComponent<SquirrelSpawner>().numSquirrels -= 1;
+        OnSquirrelDied();
         deathSound.Play();
+    }
+
+    protected void OnSquirrelDied()
+    {
+        SquirrelDied.SendMessage(this);
     }
 }
