@@ -6,7 +6,7 @@ public class WaterTile : TerrainTile {
 	//ie. whether or not enough gas has been dumped in it.
 	public bool isFlamable;
 	
-	public new void init(float height){
+	public override void init(float height){
 		base.init(height);
 		this.isFlamable = false;
 		

@@ -2,9 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TerrainGen : MonoBehaviour
+public class TerrainGen
 {
-
     public int max_val = 100;
     public int mtn_thresh = 75;
     public int tree_thresh = 46;
@@ -15,21 +14,17 @@ public class TerrainGen : MonoBehaviour
 
     public int mtn_chain = 4;
     public int water_chain = 2;
-
-
-    public float[,] array;
-    private bool[,] locked;
-    public TerrainTile[,] tiles;
-
+    
     public int cols;
     public int rows;
     public int Mtn_Spawns;
     public int Water_Spawns;
     public int Tree_Spawns;
 
-    void Start()
-    {
-    }
+
+    private float[,] array;
+    private bool[,] locked;
+
 
     //initialize some basic data fields
     public void init(int cols, int rows)
@@ -56,10 +51,10 @@ public class TerrainGen : MonoBehaviour
                 this.locked[i, j] = state;
     }
 
-    //make a collection of terrain tiles from the purely numeric array
-    public void toTerrainTiles()
+    // Extract the completed 2 dimensional tile array
+    public TerrainTile[,] toTerrainTiles()
     {
-        this.tiles = new TerrainTile[this.rows, this.cols];
+        var tiles = new TerrainTile[this.rows, this.cols];
         for (int i = 0; i < this.rows; i++)
         {
             for (int j = 0; j < this.cols; j++)
@@ -69,40 +64,38 @@ public class TerrainGen : MonoBehaviour
 
                 if (height >= mtn_thresh)
                 {
-                    MtnTile tmp = ScriptableObject.CreateInstance<MtnTile>(); tmp.init(height);
-                    curTile = (TerrainTile)tmp;
+                    curTile = ScriptableObject.CreateInstance<MtnTile>();
+                    curTile.init(height);
                 }
                 else if (height >= tree_thresh)
                 {
-                    TreeTile tmp = ScriptableObject.CreateInstance<TreeTile>();
-                    tmp.init(height);
-                    curTile = (TerrainTile)tmp;
+                    curTile = ScriptableObject.CreateInstance<TreeTile>();
+                    curTile.init(height);
                 }
                 else if (height >= brush_thresh)
                 {
-                    BrushTile tmp = ScriptableObject.CreateInstance<BrushTile>();
-                    tmp.init(height);
-                    curTile = (TerrainTile)tmp;
+                    curTile = ScriptableObject.CreateInstance<BrushTile>();
+                    curTile.init(height);
                 }
                 else if (height >= plain_thresh)
                 {
-                    PlainTile tmp = ScriptableObject.CreateInstance<PlainTile>();
-                    tmp.init(height);
-                    curTile = (TerrainTile)tmp;
+                    curTile = ScriptableObject.CreateInstance<PlainTile>();
+                    curTile.init(height);
                 }
                 else if (height >= water_thresh)
                 {
-                    WaterTile tmp = ScriptableObject.CreateInstance<WaterTile>();
-                    tmp.init(height);
-                    curTile = (TerrainTile)tmp;
+                    curTile = ScriptableObject.CreateInstance<WaterTile>();
+                    curTile.init(height);
                 }
                 else
                 {
-                    curTile = null;
+                    curTile = ScriptableObject.CreateInstance<DeepWaterTile>();
+                    curTile.init(height);
                 }
                 tiles[i, j] = curTile;
             }
         }
+        return tiles;
     }
 
     //rowVals and colVals must have the same length
@@ -408,10 +401,6 @@ public class TerrainGen : MonoBehaviour
                     int l = System.Math.Max(j - 1, 0);
                     int u = System.Math.Min(i + 1, this.rows - 1);
                     int d = System.Math.Max(i - 1, 0);
-
-                    //update = 0.25*(this.array(i+1,j) + this.array(i-1,j) +
-                    //               this.array(i,j+1) + this.array(i,j-1) -
-                    //               4*this.array(i,j)
 
                     double update = 0.25 * (this.array[d, j] + this.array[u, j] +
                                    this.array[i, r] + this.array[i, l] -

@@ -17,7 +17,7 @@ public class TerrainTile : ScriptableObject
     protected float newheat = 0;
     protected bool isFlaming = false;
 
-    public void init(float height)
+    public virtual void init(float height)
     {
         this.height = height;
         this.heatIndex = 0;

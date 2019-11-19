@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class BrushTile : TerrainTile {
-	public new void init(float height){
+	public override void init(float height){
 		base.init(height);
 		this.heatThresh = 2.0f;
 	}
