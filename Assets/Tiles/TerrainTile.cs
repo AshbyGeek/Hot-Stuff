@@ -1,20 +1,37 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
-public class TerrainTile : ScriptableObject
+[Serializable]
+public class TerrainTile
 {
+    // Relative height level of this tile. This is not in world units.
+    [SerializeField]
     public float height;
-    public float heatIndex;
-    public GameObject fireObj;
-    public GameObject dispObj;
 
+    // Current heat level
+    [SerializeField]
+    public float heatIndex;
+
+    // Minimum amount of heat to be considered 'on fire'
+    [SerializeField]
     public float heatThresh;
 
     //This caps the level of the heat
     //so that we don't have ridiculously hot fires
+    [SerializeField]
     public float maxHeat;
 
+    [NonSerialized]
+    public GameObject fireObj;
+    
+    [NonSerialized]
+    public GameObject dispObj;
+
+    [NonSerialized]
     protected float newheat = 0;
+    
+    [NonSerialized]
     protected bool isFlaming = false;
 
     public virtual void init(float height)

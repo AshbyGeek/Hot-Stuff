@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections;
+using System;
 
+[Serializable]
 public class TreeTile : TerrainTile{
 	public override void init(float height){
 		base.init(height);
@@ -8,6 +8,7 @@ public class TreeTile : TerrainTile{
 	}
 	
 	//here we will do tree specific stuff
+	[NonSerialized]
 	float treeFireBoost=1f;
 	
 	public override void accumulateHeat(float more)

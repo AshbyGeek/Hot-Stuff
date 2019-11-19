@@ -168,18 +168,20 @@ public class PrettyTerrain : MonoBehaviour
         int col = (int)Mathf.Round(j);
 
         if (row < 0) row = 0;
-        if (row > tiles.Rows()) row = tiles.Rows();
+        if (row >= tiles.Rows()) row = tiles.Rows() - 1;
         if (col < 0) col = 0;
-        if (col > tiles.Cols()) col = tiles.Cols();
+        if (col >= tiles.Cols()) col = tiles.Cols() - 1;
 
         return (row, col);
     }
 
+    ITerrainSource _terrainGenerator = new RandomTerrainGenerator();
+
     void Awake()
     {
-        ITerrainSource source = new RandomTerrainGenerator();
+        tiles = _terrainGenerator.GenerateTiles();
+        System.IO.File.WriteAllText(@"Z:\tmp\squirrelsMap.json", tiles.ToJson());
 
-        tiles = source.GenerateTiles();
         computeScaleInfo(tiles.Rows(), tiles.Cols());
         AddDetailsToTiles(tiles);
 
@@ -189,62 +191,7 @@ public class PrettyTerrain : MonoBehaviour
         mesh.RecalculateBounds();
 
         //set the height of the water
-        float tmpY = source.GetWaterHeight() * gameObject.transform.localScale.y * sizeScale.y;
+        float tmpY = _terrainGenerator.GetWaterHeight() * gameObject.transform.localScale.y * sizeScale.y;
         water_obj.transform.position = new Vector3(0, tmpY, 0);
-    }
-
-    private interface ITerrainSource
-    {
-        TerrainTile[,] GenerateTiles();
-        int GetWaterHeight();
-    }
-
-    private class RandomTerrainGenerator : ITerrainSource
-    {
-        public TerrainGen terrain = new TerrainGen()
-        {
-            max_val = 100,
-            mtn_thresh = 75,
-            tree_thresh = 46,
-            brush_thresh = 25,
-            plain_thresh = 17,
-            water_thresh = 7,
-            mtn_chain = 4,
-            water_chain = 2,
-            cols = 40,
-            rows = 40,
-            Mtn_Spawns = 3,
-            Water_Spawns = 3,
-            Tree_Spawns = 3,
-        };
-
-        public int GetWaterHeight() => terrain.plain_thresh;
-
-        public TerrainTile[,] GenerateTiles()
-        {
-            terrain.init(terrain.rows, terrain.cols);
-
-            //lock the corners to very deep values
-            terrain.lockPoint(0, 0, -100);
-            terrain.lockPoint(0, terrain.cols - 1, -100);
-            terrain.lockPoint(terrain.rows - 1, 0, -100);
-            terrain.lockPoint(terrain.rows - 1, terrain.cols - 1, -100);
-
-            terrain.lockEdges(4, -50, terrain.water_thresh - 10);
-            terrain.smooth(.01, 15, 1.9);
-            terrain.setEdgeLocks(true, terrain.water_thresh - 5);
-            terrain.lockBelowVal(terrain.water_thresh);
-
-            terrain.lockWaterBorders(20, 3);
-            terrain.lockInnerTerrain(5, 10, 3, 5, 2, 5);
-
-            //terrain.randomize(terrain.Mtn_Spawns,terrain.Water_Spawns,terrain.Tree_Spawns);
-            terrain.smooth(.00001, 2000, .9);
-
-            terrain.setAllLocks(false);
-            terrain.smooth(.01, 5, .2);
-
-            return terrain.toTerrainTiles();
-        }
     }
 }

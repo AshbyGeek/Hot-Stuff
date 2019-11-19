@@ -1,9 +1,11 @@
 using UnityEngine;
-using System.Collections;
+using System;
 
+[Serializable]
 public class WaterTile : TerrainTile {
 	//set whether or not this tile can catch on fire.
 	//ie. whether or not enough gas has been dumped in it.
+	[SerializeField]
 	public bool isFlamable;
 	
 	public override void init(float height){
